@@ -1,6 +1,8 @@
 # Created by https://www.toptal.com/developers/gitignore/api/java,node,yarn
 # Edit at https://www.toptal.com/developers/gitignore?templates=java,node,yarn
 
+.env
+
 ### Java ###
 # Compiled class file
 *.class
