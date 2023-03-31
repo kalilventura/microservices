@@ -1,19 +1,18 @@
-import Sequelize from "sequelize";
+import {Sequelize} from "sequelize";
 
-console.log(process.env.PASSWORD);
+const database = process.env.DATABASE || "auth-db";
+const username = process.env.USERNAME || "admin";
+const host = process.env.HOST || "localhost";
+const password = process.env.PASSWORD || "123456";
 
 const sequelize = new Sequelize(
-    process.env.DATABASE || "auth-db",
-    process.env.USERNAME || "admin",
-    process.env.PASSWORD || "123456", {
-    host: process.env.HOST || "localhost",
+    database, username, password, {
+    host,
     dialect: "postgres",
     quoteIdentifiers: false,
     define: {
-        syncOnAssociation: true,
         timestamps: false,
         underscored: true,
-        underscoredAll: true,
         freezeTableName: true
     }
 });
