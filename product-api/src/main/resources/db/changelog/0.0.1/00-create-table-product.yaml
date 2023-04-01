@@ -1,0 +1,45 @@
+databaseChangeLog:
+  - changeSet:
+      id: '00-create-table-product'
+      author: 'kalilventura'
+      context: 'prod, test'
+      preConditions:
+        - not:
+            tableExists:
+              tableName: 'product'
+      changes:
+        - createTable:
+            tableName: 'product'
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: 'product_pkey'
+                  name: 'id'
+                  type: 'BIGINT'
+              - column:
+                  constraints:
+                    nullable: false
+                    uniqueConstraintName: 'guid_uix'
+                  name: 'guid'
+                  type: 'VARCHAR(255)'
+              - column:
+                  constraints:
+                    nullable: false
+                  name: 'name'
+                  type: 'VARCHAR(255)'
+              - column:
+                  constraints:
+                    nullable: false
+                  name: 'quantity'
+                  type: 'BIGINT'
+              - column:
+                  constraints:
+                    nullable: false
+                  name: 'created_at'
+                  type: 'TIMESTAMP'
+      rollback:
+        - dropTable:
+            tableName: 'product'

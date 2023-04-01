@@ -2,15 +2,32 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.0.5'
     id 'io.spring.dependency-management' version '1.1.0'
+
+    id 'idea'
+
+    id 'jacoco'
+    id 'com.kageiit.jacobo' version '2.1.0'
+    id 'org.barfuin.gradle.jacocolog' version '3.0.0-RC2'
 }
 
 group = 'br.com.github.kalilventura'
 version = '0.0.1-SNAPSHOT'
+description = ''
 sourceCompatibility = '17'
 
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
+    }
+}
+
+springBoot {
+    buildInfo {
+        properties {
+            group = project.group
+            artifact = 'product-api'
+            version = project.version
+        }
     }
 }
 
@@ -23,16 +40,42 @@ ext {
 }
 
 dependencies {
+    implementation 'org.mapstruct:mapstruct:1.5.3.Final'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
+
+    runtimeOnly 'org.springframework.boot:spring-boot-devtools'
+
     implementation 'org.springframework.boot:spring-boot-starter-amqp'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
-    compileOnly 'org.projectlombok:lombok'
+
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'org.postgresql:postgresql'
+
+    implementation 'org.liquibase:liquibase-core:4.20.0'
+
+
+    compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.jupiter', module: 'junit-jupiter'
+        exclude group: 'org.junit.jupiter', module: 'junit-jupiter-engine'
+        exclude group: 'org.mockito', module: 'mockito-core'
+        exclude group: 'org.mockito', module: 'mockito-junit-jupiter'
+    }
+
+    testImplementation "com.github.tomakehurst:wiremock-jre8:2.35.0" // request mocking
+    testImplementation 'org.mockito:mockito-core:4.9.0'
     testImplementation 'org.springframework.amqp:spring-rabbit-test'
+    testImplementation 'com.github.javafaker:javafaker:1.0.2'
+
+    implementation "com.google.guava:guava:31.1-jre"
+
+    implementation 'org.jetbrains:annotations:23.0.0'
 }
 
 dependencyManagement {
