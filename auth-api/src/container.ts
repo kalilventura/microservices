@@ -12,6 +12,8 @@ import {Router} from "./modules/global/router";
 import { UserRouter } from './modules/users/infrastructure/router';
 import { FindUserByEmailService } from './modules/users/infrastructure/services/find-user-by-email-service';
 import { UserRepository } from './modules/users/infrastructure/repositories/user-repository';
+import { FindUserByEmailCommand } from './modules/users/domain/commands/find-user-by-email-command';
+import { UserController } from './modules/users/infrastructure/controllers';
 
 export class Container {
     private readonly container: AwilixContainer;
@@ -28,18 +30,18 @@ export class Container {
     this.container
     .register({
         // core
-        server: asClass(Server).singleton(),
+        server: asClass(Server).classic(),
         config: asValue(currentConfig),
-        router: asFunction(Router).singleton(),
+        router: asFunction(Router).classic(),
     })
     .register({
-        apiRouter: asFunction(UserRouter).singleton()
+        apiRouter: asFunction(UserRouter).classic()
     })
     .register({
-      getUserFindByEmailService: asClass(FindUserByEmailService).scoped()
-    })
-    .register({
-      userRepository: asClass(UserRepository).scoped()
+      userRepository: asClass(UserRepository).classic(),
+      getUserFindByEmailService: asClass(FindUserByEmailService).classic(),
+      findUserByEmailCommand: asClass(FindUserByEmailCommand).classic(),
+      findUserController: asClass(UserController).classic()
     })
     ;
   }

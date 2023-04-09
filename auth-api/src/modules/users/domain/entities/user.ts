@@ -1,1 +1,5 @@
-export class User {}
+class User {
+    
+};
+
+export {User};

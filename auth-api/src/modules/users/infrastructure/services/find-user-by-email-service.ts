@@ -3,9 +3,9 @@ import { IFindUserByEmailService } from "../../domain/services/find-user-by-emai
 import { IUserRepository } from "../repositories/contracts/user-repository";
 
 export class FindUserByEmailService implements IFindUserByEmailService {
-    constructor(private repository: IUserRepository) {}
+    constructor(private userRepository: IUserRepository) {}
 
     public async findByEmail(email: string): Promise<User | null> {
-        return await this.repository.findByEmail(email);
+        return await this.userRepository.findByEmail(email);
     }
 }

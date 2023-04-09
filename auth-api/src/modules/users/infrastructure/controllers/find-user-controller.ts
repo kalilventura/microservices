@@ -1,18 +1,19 @@
 import {Request, Response, NextFunction} from "express";
-import { FindUserByEMailCommand, Listeners } from "../../domain/commands/find-user-by-email-command";
-import { User } from "../../domain/entities/user";
+import {Listeners} from "../../domain/commands/listeners/user-listener";
+import {FindUserByEmailCommand} from "../../domain/commands/find-user-by-email-command";
+import {User} from "../../domain/entities/user";
 
-export class UserController {
-    constructor (private command: FindUserByEMailCommand) {}
+class UserController {
+    constructor (private findUserByEmailCommand: FindUserByEmailCommand) {}
 
-    public async get(req: Request, resp: Response, next: NextFunction): Promise<Response | void> {
+    public async get(req: Request, resp: Response): Promise<Response | void> {
         const email: string = req.body["email"];
 
         const listeners: Listeners = {
             onSuccess: (user: User) => this.onSuccess(user, resp),
             onEmpty: () => this.onEmpty(resp)
         };
-        this.command.execute(email, listeners);
+        this.findUserByEmailCommand.execute(email, listeners);
         return resp;
     }
 
@@ -23,4 +24,6 @@ export class UserController {
     private onEmpty(resp: Response) {
         resp.status(201);
     }
-}
+};
+
+export {UserController};

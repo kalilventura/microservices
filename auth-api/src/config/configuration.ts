@@ -13,12 +13,12 @@ export type Configuration = {
 };
 
 export const currentConfig: Configuration = {
-    NODE_ENV: 'development',
-    PORT: +(process.env.PORT || 3000),
-    APP_NAME: process.env.APP_NAME || 'express-ts-ddd',
-    DATABASE: process.env.DATABASE || "auth-db",
-    USERNAME: process.env.USERNAME || "admin",
-    PASSWORD: process.env.PASSWORD || "123456",
-    HOST: process.env.HOST || "localhost",
+    NODE_ENV: process.env.NODE_ENV!,
+    PORT: +(process.env.PORT!),
+    APP_NAME: process.env.APP_NAME!,
+    DATABASE: process.env.DATABASE!,
+    USERNAME: process.env.USERNAME!,
+    PASSWORD: process.env.PASSWORD!,
+    HOST: process.env.HOST!,
 };
 

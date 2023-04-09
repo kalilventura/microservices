@@ -11,14 +11,11 @@ server
   .start()
   .then(async () => {
     console.info(`Environment: ${config.NODE_ENV}`);
-    console.info(`Server started at port ${config.PORT}`);
+    // initializeDatabase();
 
-    initializeDatabase();
-
-    if (config.NODE_ENV === 'development') {
-        seedInitialData();
-    }
-
+    // if (config.NODE_ENV === 'development') {
+    //     seedInitialData();
+    // }
   })
   .catch((err: Error) => {
     console.error(err);

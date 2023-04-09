@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import User from "../../modules/users/infrastructure/models/user";
+import {User} from "../../modules/users/infrastructure/models/user";
 
 const isDev = process.env.NODE_ENV === 'development';
 

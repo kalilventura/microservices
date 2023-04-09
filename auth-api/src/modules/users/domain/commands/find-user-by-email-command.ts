@@ -1,16 +1,11 @@
-import { User } from "../entities/user";
 import { IFindUserByEmailService } from "../services/find-user-by-email-service";
+import { Listeners } from "./listeners/user-listener";
 
-export interface Listeners {
-    onSuccess: (user: User) => void;
-    onEmpty: () => void;
-}
-
-export class FindUserByEMailCommand {
-    constructor(private service: IFindUserByEmailService) {}
+export class FindUserByEmailCommand {
+    constructor(private getUserFindByEmailService: IFindUserByEmailService) {}
 
     public execute(email: string, listeners: Listeners): void {
-        const user = this.service.findByEmail(email);
+        const user = this.getUserFindByEmailService.findByEmail(email);
         if (user) {
             listeners.onSuccess(user);
         } else {
