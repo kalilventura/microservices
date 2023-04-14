@@ -1,5 +1,0 @@
-class User {
-    
-};
-
-export {User};
