@@ -17,7 +17,7 @@ export class FindUserByEmailController {
   @Get('/users/:email')
   @ApiOperation({ summary: 'Find an user by the target email.' })
   @ApiResponse({ status: 200, description: 'User found.', type: UserResponse })
-  @ApiResponse({ status: 201, description: 'User not found.' })
+  @ApiResponse({ status: 204, description: 'User not found.' })
   public async get(@Param('email') email: string, @Res() response: Response) {
     const listeners: Listeners = {
       onSuccess: (user: User) => this.onSuccess(user, response),

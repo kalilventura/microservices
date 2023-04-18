@@ -1,9 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class UserResponse {
-  constructor(name: string, email: string) {
+export class InsertUserRequest {
+  constructor(name: string, email: string, password: string) {
     this.name = name;
     this.email = email;
+    this.password = password;
   }
 
   @ApiProperty({
@@ -11,12 +12,19 @@ export class UserResponse {
     description: 'The user name',
     default: 'John Doe',
   })
-  public readonly name: string;
+  public name: string;
 
   @ApiProperty({
     type: String,
     description: 'The user email',
     default: 'jhon.doe@email.com',
   })
-  public readonly email: string;
+  public email: string;
+
+  @ApiProperty({
+    type: String,
+    description: 'The user password',
+    default: 'jhon.doe1234@at',
+  })
+  public password: string;
 }

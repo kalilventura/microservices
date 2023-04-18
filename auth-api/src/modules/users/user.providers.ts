@@ -2,6 +2,8 @@ import { Scope, Provider } from '@nestjs/common';
 import { SequelizeUser } from './infrastructure/repositories/models/user.model';
 import { FindUserByEmailService } from './infrastructure/services/find_user_by_email.service';
 import { IFindUserByEmailService } from './domain/services/find_user_by_email.service';
+import { IInsertUserService } from './domain/services/insert_user.service';
+import { InsertUserService } from './infrastructure/services/insert_user.service';
 import { IUsersRepository } from './infrastructure/repositories/contracts/users.repository';
 import { UsersRepository } from './infrastructure/repositories/users.repository';
 
@@ -19,6 +21,11 @@ export const usersProviders: Provider[] = [
   {
     provide: IUsersRepository,
     useClass: UsersRepository,
+    scope: Scope.TRANSIENT,
+  },
+  {
+    provide: IInsertUserService,
+    useClass: InsertUserService,
     scope: Scope.TRANSIENT,
   },
 ];

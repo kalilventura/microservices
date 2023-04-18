@@ -8,6 +8,14 @@ export class UsersRepository implements IUsersRepository {
     @Inject('USERS_REPOSITORY') private userModel: typeof SequelizeUser,
   ) {}
 
+  public async insert(user: SequelizeUser): Promise<SequelizeUser> {
+    return await this.userModel.create<SequelizeUser>({
+      name: user.name,
+      email: user.email,
+      password: user.password,
+    });
+  }
+
   public async findByEmail(email: string): Promise<SequelizeUser | null> {
     return this.userModel.findOne<SequelizeUser>({ where: { email } });
   }
