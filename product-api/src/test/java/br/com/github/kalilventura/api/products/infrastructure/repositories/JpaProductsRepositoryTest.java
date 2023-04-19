@@ -13,7 +13,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Tag("integration")
 @ActiveProfiles("test")
@@ -36,12 +36,17 @@ class JpaProductsRepositoryTest {
     }
 
     @Test
-    @Sql({"/db/seeders/products/product.sql"})
+    @Sql({"/db/seeders/products/product_01.sql"})
     @VisibleForTesting
     @DisplayName("should get a product by guid successfully")
     void findByGuidSuccessfully() {
         // given
+        final var guid = "703cfc68-4e6c-4472-9752-6e658a092744";
+
         // when
+        final var product = repository.findByGuid(guid);
+
         // then
+        assertTrue(product.isPresent(), "there's a product with the desired guid");
     }
 }
