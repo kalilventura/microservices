@@ -3,7 +3,7 @@ import { SequelizeUser } from '../../repositories/models/user.model';
 
 export class UserMapper {
   public static mapToEntity(entity: SequelizeUser): User {
-    return new User(null, entity.name, entity.email, null);
+    return new User(entity.id, entity.name, entity.email, entity.password);
   }
 
   public static mapToSequelize(user: User): SequelizeUser {

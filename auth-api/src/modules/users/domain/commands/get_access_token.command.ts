@@ -3,6 +3,7 @@ import { AccessToken } from '../entities/access_token';
 import { IFindUserByEmailService } from '../services/find_user_by_email.service';
 import { Token } from '../entities/token';
 import { Inject, Injectable } from '@nestjs/common';
+import { compareSync } from 'bcrypt';
 
 export interface Listeners {
   onSuccess: (token: Token) => void;
@@ -22,7 +23,7 @@ export class GetAccessTokenCommand {
     listeners: Listeners,
   ): Promise<void> {
     const user = await this.findUserByEmailService.findByEmail(access.email);
-    if (user && user.password === access.password) {
+    if (user && compareSync(access.password, user.password)) {
       const userJwt = { username: user.email, sub: user.id };
       const token = await this.jwtService.signAsync(userJwt);
       listeners.onSuccess(new Token(token));
