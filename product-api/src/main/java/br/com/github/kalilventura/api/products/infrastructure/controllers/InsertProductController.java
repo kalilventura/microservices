@@ -8,6 +8,7 @@ import br.com.github.kalilventura.api.products.infrastructure.controllers.respon
 import br.com.github.kalilventura.api.products.infrastructure.controllers.responses.mappers.ProductResponseMapper;
 import lombok.AccessLevel;
 import lombok.Getter;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,15 +35,16 @@ public class InsertProductController {
     public ResponseEntity<ProductResponse> post(@RequestBody final ProductRequest request) {
         final var listeners = new InsertProductCommand.Listeners(this::onSuccess, this::onError);
         getCommand().execute(ProductRequestMapper.INSTANCE.mapToEntity(request), listeners);
-
         return response;
     }
 
     private void onSuccess(final Product product) {
-        response = ResponseEntity.ok(ProductResponseMapper.INSTANCE.mapToResponse(product));
+        response = new ResponseEntity<>(ProductResponseMapper.INSTANCE.mapToResponse(product), HttpStatus.CREATED);
     }
 
-    private void onError() {
-        response = ResponseEntity.unprocessableEntity().build();
+    private void onError(final Product product) {
+        response = ResponseEntity
+                .badRequest()
+                .body(ProductResponseMapper.INSTANCE.mapToResponse(product));
     }
 }

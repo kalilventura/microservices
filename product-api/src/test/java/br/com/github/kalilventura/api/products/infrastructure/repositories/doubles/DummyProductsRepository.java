@@ -13,4 +13,14 @@ public class DummyProductsRepository implements ProductsRepository {
     public Optional<JpaProduct> findByGuid(final String guid) {
         return Optional.empty();
     }
+
+    @Override
+    public JpaProduct save(final JpaProduct product) {
+        return null;
+    }
+
+    @Override
+    public Optional<JpaProduct> findByName(String name) {
+        return Optional.empty();
+    }
 }

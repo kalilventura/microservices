@@ -21,4 +21,16 @@ public class InMemoryProductsRepository implements ProductsRepository {
     public Optional<JpaProduct> findByGuid(final String guid) {
         return items.stream().filter(product -> product.getGuid().equals(guid)).findFirst();
     }
+
+    @Override
+    public JpaProduct save(final JpaProduct product) {
+        product.setId(1L);
+        items.add(product);
+        return product;
+    }
+
+    @Override
+    public Optional<JpaProduct> findByName(final String name) {
+        return items.stream().filter(product -> product.getName().equals(name)).findFirst();
+    }
 }

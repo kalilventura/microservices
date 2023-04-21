@@ -15,10 +15,10 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@SpringBootTest
 @Tag("integration")
 @ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
-@SpringBootTest
 class JpaProductsRepositoryTest {
 
     private final ProductsRepository repository;
@@ -36,8 +36,8 @@ class JpaProductsRepositoryTest {
     }
 
     @Test
-    @Sql({"/db/seeders/products/product_01.sql"})
     @VisibleForTesting
+    @Sql({"/db/seeders/products/product_01.sql"})
     @DisplayName("should get a product by guid successfully")
     void findByGuidSuccessfully() {
         // given

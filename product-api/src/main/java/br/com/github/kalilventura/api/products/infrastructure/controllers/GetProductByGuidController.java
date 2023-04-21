@@ -8,7 +8,10 @@ import br.com.github.kalilventura.api.products.infrastructure.controllers.respon
 import lombok.AccessLevel;
 import lombok.Getter;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("${api.v1.endpoint-prefix}")

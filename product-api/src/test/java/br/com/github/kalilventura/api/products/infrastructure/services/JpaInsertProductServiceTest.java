@@ -1,6 +1,7 @@
 package br.com.github.kalilventura.api.products.infrastructure.services;
 
 import br.com.github.kalilventura.api.global.domain.helpers.GuidHelper;
+import br.com.github.kalilventura.api.products.domain.builders.ProductBuilder;
 import br.com.github.kalilventura.api.products.infrastructure.builders.JpaProductBuilder;
 import br.com.github.kalilventura.api.products.infrastructure.repositories.doubles.InMemoryProductsRepository;
 import com.google.common.annotations.VisibleForTesting;
@@ -10,46 +11,30 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Tag("unit")
 @NoArgsConstructor
-class JpaGetProductByGuidServiceTest {
+class JpaInsertProductServiceTest {
 
     @Test
     @VisibleForTesting
-    @DisplayName("should return a product with target guid successfully")
-    void getByGuidSuccessfully() {
+    @DisplayName("should save a new product successfully")
+    void saveSuccessfully() {
         // given
         final var guid = GuidHelper.getRandomValue();
 
         final var product = new JpaProductBuilder().withGuid(guid).buildDefault();
 
         final var repository = new InMemoryProductsRepository(List.of(product));
-        final var service = new JpaGetProductByGuidService(repository);
+        final var service = new JpaInsertProductService(repository);
 
         // when
-        final var retrieved = service.getByGuid(guid);
+        final var retrieved = service.save(new ProductBuilder().buildDefault());
 
         // then
-        assertTrue(retrieved.isPresent(), "there's a product with desired guid");
-    }
-
-    @Test
-    @VisibleForTesting
-    @DisplayName("should return an empty product with target guid")
-    void getByGuidEmpty() {
-        // given
-        final var guid = GuidHelper.getRandomValue();
-
-        final var repository = new InMemoryProductsRepository();
-        final var service = new JpaGetProductByGuidService(repository);
-
-        // when
-        final var product = service.getByGuid(guid);
-
-        // then
-        assertTrue(product.isEmpty(), "there's no product with desired guid");
+        assertTrue(Objects.nonNull(retrieved), "inserted a new product");
     }
 }

@@ -11,9 +11,15 @@ public class JpaProductBuilder {
     private final Faker faker = new Faker();
 
     private String guid = faker.internet().uuid();
+    private String name = faker.name().name();
 
     public JpaProductBuilder withGuid(final String productGuid) {
         guid = productGuid;
+        return this;
+    }
+
+    public JpaProductBuilder withName(final String productName) {
+        name = productName;
         return this;
     }
 
@@ -21,7 +27,7 @@ public class JpaProductBuilder {
         return JpaProduct
                 .builder()
                 .guid(guid)
-                .name(faker.name().name())
+                .name(name)
                 .quantity(faker.number().randomNumber(10, true))
                 .build();
     }

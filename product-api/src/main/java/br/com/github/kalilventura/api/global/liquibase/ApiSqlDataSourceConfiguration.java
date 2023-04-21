@@ -1,4 +1,4 @@
-package br.com.github.kalilventura.api.products.global.infrastructure;
+package br.com.github.kalilventura.api.global.liquibase;
 
 import br.com.github.kalilventura.api.global.shared.SqlDataSourceHelper;
 import jakarta.persistence.EntityManagerFactory;
@@ -17,13 +17,16 @@ import javax.sql.DataSource;
 @NoArgsConstructor
 @EnableTransactionManagement
 @EnableJpaRepositories(
-        basePackages = {"br.com.github.kalilventura.api.products.infrastructure.repositories"}
+        basePackages = {
+                "br.com.github.kalilventura.api.products.infrastructure.repositories",
+                "br.com.github.kalilventura.api.categories.infrastructure.repositories"
+        }
 )
-@EnableConfigurationProperties(ProductSqlDataSourceProperties.class)
-public class ProductSqlDataSourceConfiguration {
+@EnableConfigurationProperties(ApiSqlDataSourceProperties.class)
+public class ApiSqlDataSourceConfiguration {
 
     @Bean
-    public DataSource dataSource(final ProductSqlDataSourceProperties properties) {
+    public DataSource dataSource(final ApiSqlDataSourceProperties properties) {
         return SqlDataSourceHelper.buildDataSource(properties);
     }
 

@@ -2,18 +2,26 @@ package br.com.github.kalilventura.api.products.domain.builders;
 
 import br.com.github.kalilventura.api.products.domain.entities.Product;
 import com.github.javafaker.Faker;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@NoArgsConstructor
 public class ProductBuilder {
 
     private final Faker faker = new Faker();
 
     private String guid = faker.internet().uuid();
+    private String productName = faker.name().name();
 
     public ProductBuilder withGuid(final String productGuid) {
         guid = productGuid;
+        return this;
+    }
+
+    public ProductBuilder withName(final String name) {
+        productName = name;
         return this;
     }
 
@@ -21,7 +29,7 @@ public class ProductBuilder {
         return Product
                 .builder()
                 .guid(guid)
-                .name(faker.name().name())
+                .name(productName)
                 .quantity(faker.number().randomNumber(10, true))
                 .build();
     }

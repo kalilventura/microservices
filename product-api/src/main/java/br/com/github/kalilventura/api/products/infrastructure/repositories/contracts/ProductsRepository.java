@@ -7,4 +7,8 @@ import java.util.Optional;
 public interface ProductsRepository {
 
     Optional<JpaProduct> findByGuid(String guid);
+
+    JpaProduct save(JpaProduct product);
+
+    Optional<JpaProduct> findByName(String name);
 }
