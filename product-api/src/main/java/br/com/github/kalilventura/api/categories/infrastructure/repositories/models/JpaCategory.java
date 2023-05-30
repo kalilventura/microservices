@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
@@ -27,12 +28,20 @@ public class JpaCategory {
     private Integer id;
 
     @Getter
+    @Setter
+    @Column(nullable = false)
+    private String guid;
+
+    @Getter
+    @Setter
     @Column(nullable = false)
     private String description;
 
+    @Getter
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
+    @Getter
     @Column
     private LocalDateTime updatedAt;
 

@@ -3,6 +3,7 @@ package br.com.github.kalilventura.api.categories.infrastructure.controllers;
 import br.com.github.kalilventura.api.categories.domain.commands.InsertCategoryCommand;
 import br.com.github.kalilventura.api.categories.domain.commands.InsertCategoryCommand.Listeners;
 import br.com.github.kalilventura.api.categories.domain.entities.Category;
+import br.com.github.kalilventura.api.categories.infrastructure.controllers.mappers.CategoryMapper;
 import br.com.github.kalilventura.api.categories.infrastructure.controllers.requests.InsertCategoryRequest;
 import br.com.github.kalilventura.api.categories.infrastructure.controllers.requests.mappers.InsertCategoryMapper;
 import br.com.github.kalilventura.api.categories.infrastructure.controllers.responses.CategoryResponse;
@@ -42,7 +43,7 @@ public class InsertCategoryController {
     }
 
     private void onCreated(final Category category) {
-        setResponse(new ResponseEntity<>(HttpStatus.CREATED));
+        setResponse(new ResponseEntity<>(CategoryMapper.INSTANCE.mapToResponse(category), HttpStatus.CREATED));
     }
 
     private void onExists() {

@@ -8,6 +8,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,5 +25,14 @@ public class JpaFindCategoryService implements FindCategoryService {
     public Optional<Category> findByDescription(final String description) {
         final var category = getRepository().findByDescription(description);
         return category.map(CategoryMapper.INSTANCE::mapToEntity);
+    }
+
+    @Override
+    public List<Category> findAll() {
+        return getRepository()
+        .findAll()
+        .stream()
+        .map(CategoryMapper.INSTANCE::mapToEntity)
+        .toList();
     }
 }

@@ -3,6 +3,7 @@ package br.com.github.kalilventura.api.products.infrastructure.services;
 import br.com.github.kalilventura.api.products.domain.entities.Product;
 import br.com.github.kalilventura.api.products.domain.services.UpdateProductStockService;
 import br.com.github.kalilventura.api.products.infrastructure.repositories.contracts.ProductsRepository;
+import br.com.github.kalilventura.api.products.infrastructure.services.mappers.ProductMapper;
 import lombok.AccessLevel;
 import lombok.Getter;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ public class JpaUpdateProductStockService implements UpdateProductStockService {
 
     @Override
     public void updateStock(final Product product) {
-
+        final var jpa = ProductMapper.INSTANCE.mapToJpa(product);
+        getRepository().save(jpa);
     }
 }

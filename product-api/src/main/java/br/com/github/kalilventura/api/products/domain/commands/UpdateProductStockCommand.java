@@ -18,6 +18,7 @@ public class UpdateProductStockCommand {
 
     public void execute(final Product product, final Listeners listeners) {
         getService().updateStock(product);
+        listeners.onSuccess().run();
     }
 
     public record Listeners(Runnable onSuccess, Runnable onError) {}
