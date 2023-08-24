@@ -1,7 +1,6 @@
 package br.com.github.kalilventura.api.categories.infrastructure.services;
 
 import br.com.github.kalilventura.api.categories.domain.builders.CategoryBuilder;
-import br.com.github.kalilventura.api.categories.domain.entities.Category;
 import br.com.github.kalilventura.api.categories.infrastructure.repositories.doubles.InMemoryCategoriesRepository;
 import com.google.common.annotations.VisibleForTesting;
 import lombok.NoArgsConstructor;

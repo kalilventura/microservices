@@ -1,6 +1,5 @@
 package br.com.github.kalilventura.api.products.domain.commands.doubles;
 
-import br.com.github.kalilventura.api.products.domain.commands.GetProductByGuidCommand;
 import br.com.github.kalilventura.api.products.domain.commands.GetProductsByCategoryCommand;
 import br.com.github.kalilventura.api.products.domain.entities.Product;
 import br.com.github.kalilventura.api.products.infrastructure.services.doubles.InMemoryGetProductByCategoryService;
