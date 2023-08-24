@@ -39,6 +39,6 @@ public class GetProductsByCategoryController {
     }
 
     private void onEmpty() {
-        response = ResponseEntity.notFound().build();
+        response = ResponseEntity.noContent().build();
     }
 }

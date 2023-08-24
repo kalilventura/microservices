@@ -39,5 +39,4 @@ public class GetProductByNameController {
     private void onEmpty() {
         response = ResponseEntity.notFound().build();
     }
-
 }

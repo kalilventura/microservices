@@ -21,7 +21,6 @@ public class JpaUpdateProductStockService implements UpdateProductStockService {
     @Override
     public void updateStock(final Product product) {
         final var jpa = getRepository().findByGuid(product.guid()).orElseThrow();
-        jpa.setName(product.name());
         jpa.setQuantity(product.quantity());
 
         getRepository().save(jpa);
