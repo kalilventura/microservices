@@ -33,4 +33,17 @@ public class InMemoryProductsRepository implements ProductsRepository {
     public Optional<JpaProduct> findByName(final String name) {
         return items.stream().filter(product -> product.getName().equals(name)).findFirst();
     }
+
+    @Override
+    public List<JpaProduct> findByCategoryGuid(final String guid) {
+        return items.stream().filter(product -> product.getCategory().getGuid().equals(guid)).toList();
+    }
+
+    @Override
+    public void deleteByGuid(final String guid) {
+        items.stream()
+                .filter(jpa -> jpa.getGuid().equals(guid))
+                .findFirst()
+                .ifPresent(items::remove);
+    }
 }

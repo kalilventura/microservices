@@ -1,5 +1,6 @@
 package br.com.github.kalilventura.api.products.infrastructure.repositories.models;
 
+import br.com.github.kalilventura.api.categories.infrastructure.repositories.models.JpaCategory;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,12 +27,20 @@ public class JpaProduct {
     private String guid;
 
     @Getter
+    @Setter
     @Column(nullable = false)
     private String name;
 
     @Getter
+    @Setter
     @Column(nullable = false)
     private Long quantity;
+
+    @Getter
+    @Setter
+    @JoinColumn(name = "category_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private JpaCategory category;
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;

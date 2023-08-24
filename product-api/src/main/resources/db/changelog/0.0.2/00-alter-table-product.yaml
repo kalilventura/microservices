@@ -1,0 +1,32 @@
+databaseChangeLog:
+  - changeSet:
+      id: '00-alter-table-product'
+      author: 'kalilventura'
+      context: 'prod, test'
+      preConditions:
+        - tableExists:
+            tableName: 'product'
+      changes:
+        - addColumn:
+            tableName: 'product'
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                  name: 'category_id'
+                  type: 'BIGINT'
+        - addForeignKeyConstraint:
+            baseTableName: 'product'
+            baseColumnNames: 'category_id'
+            constraintName: 'product_category_fk'
+            referencedTableName: 'category'
+            referencedColumnNames: 'id'
+      rollback:
+        - dropForeignKeyConstraint:
+            constraintName: 'product_category_fk'
+            baseTableName: 'product'
+        - dropColumn:
+            tableName: 'product'
+            columns:
+              - column:
+                  name: 'category_id'

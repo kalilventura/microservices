@@ -17,6 +17,11 @@ public class JpaCategoryBuilder {
     private String guid = GuidHelper.getRandomValue();
     private String description = faker.lorem().characters();
 
+    public JpaCategoryBuilder withGuid(final String value) {
+        guid = value;
+        return this;
+    }
+
     public JpaCategoryBuilder withDescription(final String value) {
         description = value;
         return this;

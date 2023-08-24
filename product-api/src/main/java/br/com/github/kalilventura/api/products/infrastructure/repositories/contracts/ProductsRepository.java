@@ -2,6 +2,7 @@ package br.com.github.kalilventura.api.products.infrastructure.repositories.cont
 
 import br.com.github.kalilventura.api.products.infrastructure.repositories.models.JpaProduct;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface ProductsRepository {
@@ -11,4 +12,8 @@ public interface ProductsRepository {
     JpaProduct save(JpaProduct product);
 
     Optional<JpaProduct> findByName(String name);
+
+    List<JpaProduct> findByCategoryGuid(String guid);
+
+    void deleteByGuid(String guid);
 }

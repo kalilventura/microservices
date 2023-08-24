@@ -11,7 +11,6 @@ import java.util.List;
 public class ProductBuilder {
 
     private final Faker faker = new Faker();
-
     private String guid = faker.internet().uuid();
     private String productName = faker.name().name();
 

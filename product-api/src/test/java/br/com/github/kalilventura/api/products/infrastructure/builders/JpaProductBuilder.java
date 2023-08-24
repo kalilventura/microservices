@@ -1,17 +1,25 @@
 package br.com.github.kalilventura.api.products.infrastructure.builders;
 
+import br.com.github.kalilventura.api.categories.infrastructure.repositories.models.JpaCategory;
 import br.com.github.kalilventura.api.products.infrastructure.repositories.models.JpaProduct;
 import com.github.javafaker.Faker;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class JpaProductBuilder {
 
     private final Faker faker = new Faker();
 
+    private JpaCategory category;
     private String guid = faker.internet().uuid();
     private String name = faker.name().name();
+
+    public JpaProductBuilder withCategory(final JpaCategory jpaCategory) {
+        category = jpaCategory;
+        return this;
+    }
 
     public JpaProductBuilder withGuid(final String productGuid) {
         guid = productGuid;
@@ -24,12 +32,17 @@ public class JpaProductBuilder {
     }
 
     public JpaProduct buildDefault() {
-        return JpaProduct
+        final var builder = JpaProduct
                 .builder()
                 .guid(guid)
                 .name(name)
-                .quantity(faker.number().randomNumber(10, true))
-                .build();
+                .quantity(faker.number().randomNumber(10, true));
+
+        if (Objects.nonNull(category)) {
+            builder.category(category);
+        }
+
+        return builder.build();
     }
 
     public List<JpaProduct> buildMany(final int quantity) {
