@@ -1,15 +1,11 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.2.5'
-    id 'io.spring.dependency-management' version '1.1.4'
-
+    id 'org.springframework.boot' version '3.3.1'
+    id 'io.spring.dependency-management' version '1.1.6'
     id 'idea'
-
     id 'jacoco'
     id 'com.kageiit.jacobo' version '2.1.0'
     id 'org.barfuin.gradle.jacocolog' version '3.1.0'
-
-    // Gradle Dependency Update Checker
     id 'com.github.ben-manes.versions' version '0.51.0'
 }
 
@@ -38,53 +34,17 @@ repositories {
 }
 
 ext {
-    springCloudVersion = '2023.0.1'
-    springBootVersion = '3.2.5'
-}
-
-dependencies {
-    implementation 'org.mapstruct:mapstruct:1.5.3.Final'
-    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
-
-    compileOnly 'org.springframework.boot:spring-boot-devtools'
-
-    implementation 'org.springframework.boot:spring-boot-starter-amqp'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
-    implementation 'org.springframework.boot:spring-boot-devtools'
-
-
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    runtimeOnly 'org.postgresql:postgresql'
-
-    implementation 'org.liquibase:liquibase-core:4.27.0'
-
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
-    testCompileOnly 'org.projectlombok:lombok'
-    testAnnotationProcessor 'org.projectlombok:lombok'
-
-    testImplementation('org.springframework.boot:spring-boot-starter-test') {
-        exclude group: 'org.junit.jupiter', module: 'junit-jupiter'
-        exclude group: 'org.junit.jupiter', module: 'junit-jupiter-engine'
-        exclude group: 'org.mockito', module: 'mockito-core'
-        exclude group: 'org.mockito', module: 'mockito-junit-jupiter'
-    }
-
-    testImplementation 'org.wiremock:wiremock:3.5.4'
-    testImplementation 'org.mockito:mockito-core:5.11.0'
-    testImplementation 'org.springframework.amqp:spring-rabbit-test'
-//    testImplementation 'com.github.javafaker:javafaker:1.0.2'
-
-//    testImplementation 'com.h2database:h2:2.1.214'
-    testImplementation 'org.testcontainers:testcontainers:1.19.7'
-    testImplementation 'org.testcontainers:junit-jupiter:1.19.7'
-    testImplementation 'org.testcontainers:postgresql:1.19.7'
-
-    implementation 'com.google.guava:guava:33.1.0-jre'
-
-    implementation 'org.jetbrains:annotations:24.1.0'
+    springCloudVersion = '2023.0.2'
+    springBootVersion = '3.3.1'
+    mapstructVersion = '1.5.3.Final'
+    lombokVersion = '1.18.34'
+    liquibaseVersion = '4.28.0'
+    wiremockVersion = '3.5.4'
+    mockitoVersion = '5.12.0'
+    guavaVersion = '33.2.1-jre'
+    annotationsVersion = '24.1.0'
+    testcontainersVersion = '1.19.8'
+    postgresVersion = '42.7.3'
 }
 
 dependencyManagement {
@@ -92,6 +52,51 @@ dependencyManagement {
         mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
     }
+}
+
+dependencies {
+    // Spring Boot Starters
+    implementation 'org.springframework.boot:spring-boot-starter-amqp'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    implementation 'org.springframework.boot:spring-boot-devtools'
+
+    // MapStruct
+    implementation "org.mapstruct:mapstruct:${mapstructVersion}"
+    annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
+
+    // Liquibase
+    implementation "org.liquibase:liquibase-core:${liquibaseVersion}"
+
+    // Lombok
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
+    testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+
+    // PostgresSQL
+    runtimeOnly "org.postgresql:postgresql:${postgresVersion}"
+
+    // Guava
+    implementation "com.google.guava:guava:${guavaVersion}"
+
+    // JetBrains Annotations
+    implementation "org.jetbrains:annotations:${annotationsVersion}"
+
+    // Test Dependencies
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.jupiter', module: 'junit-jupiter'
+        exclude group: 'org.junit.jupiter', module: 'junit-jupiter-engine'
+        exclude group: 'org.mockito', module: 'mockito-core'
+        exclude group: 'org.mockito', module: 'mockito-junit-jupiter'
+    }
+    testImplementation "org.wiremock:wiremock:${wiremockVersion}"
+    testImplementation "org.mockito:mockito-core:${mockitoVersion}"
+    testImplementation 'org.springframework.amqp:spring-rabbit-test'
+    testImplementation "org.testcontainers:testcontainers:${testcontainersVersion}"
+    testImplementation "org.testcontainers:junit-jupiter:${testcontainersVersion}"
+    testImplementation "org.testcontainers:postgresql:${testcontainersVersion}"
 }
 
 tasks.named('test') {
