@@ -1,26 +1,22 @@
-FROM gradle:8.0.2-jdk17-alpine as builder
+FROM gradle:8.7.0-jdk11-alpine as builder
 
 ARG HOME_DIR="/home/app"
-RUN addgroup -S -g 1001 xyz \ && adduser -S -u 1001 -h $HOME_DIR -G xyz app
 WORKDIR $HOME_DIR
 
 COPY src src/
 COPY build.gradle settings.gradle ./
 
-RUN chown -R app:xyz $HOME_DIR
-USER app
+RUN gradle assemble
 
-RUN gradle clean bootJar
-
-FROM amazoncorretto:20.0.2-alpine3.18
+FROM amazoncorretto:21.0.3-alpine3.19
 
 RUN apk add --no-cache curl
 
 ARG HOME_DIR="/home/app"
-RUN addgroup -S -g 1001 xyz \ && adduser -S -u 1001 -h $HOME_DIR -G xyz app
+RUN addgroup -g 1001 xyz && adduser -D -u 1001 -h $HOME_DIR -G xyz app
 WORKDIR $HOME_DIR
 
-COPY --from=builder $HOME_DIR/build/libs/api.jar ./
+COPY --from=builder $HOME_DIR/build/libs/product-0.0.1.jar ./
 
 RUN chown -R app:xyz $HOME_DIR
 USER app
