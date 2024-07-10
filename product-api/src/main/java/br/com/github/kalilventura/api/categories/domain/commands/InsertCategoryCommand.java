@@ -12,10 +12,7 @@ import java.util.function.Consumer;
 @Component
 public class InsertCategoryCommand {
 
-    @Getter(AccessLevel.PRIVATE)
     private final InsertCategoryService insertService;
-
-    @Getter(AccessLevel.PRIVATE)
     private final FindCategoryService findService;
 
     public InsertCategoryCommand(
@@ -26,11 +23,11 @@ public class InsertCategoryCommand {
     }
 
     public void execute(final Category categoryToInsert, final Listeners listeners) {
-        final var category = getFindService().findByDescription(categoryToInsert.description());
+        final var category = findService.findByDescription(categoryToInsert.description());
         if (category.isPresent()) {
             listeners.onExists().run();
         } else {
-            final var inserted = getInsertService().save(categoryToInsert);
+            final var inserted = insertService.save(categoryToInsert);
             listeners.onCreated().accept(inserted);
         }
     }

@@ -1,5 +1,7 @@
 package br.com.github.kalilventura.api.categories.infrastructure.repositories.models;
 
+import br.com.github.kalilventura.api.categories.domain.entities.Category;
+import br.com.github.kalilventura.api.categories.infrastructure.services.mappers.CategoryMapper;
 import br.com.github.kalilventura.api.products.infrastructure.repositories.models.JpaProduct;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -60,5 +62,13 @@ public class JpaCategory {
     @PreUpdate
     public void preUpdate() {
         updatedAt = LocalDateTime.now();
+    }
+
+    public static JpaCategory toJpa(final Category category) {
+        return CategoryMapper.INSTANCE.mapToJpa(category);
+    }
+
+    public Category toDomain() {
+        return CategoryMapper.INSTANCE.mapToEntity(this);
     }
 }

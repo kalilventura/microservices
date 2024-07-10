@@ -44,7 +44,7 @@ public class RabbitConfiguration {
     }
 
     @Bean
-    public Binding productStockMqBinding(TopicExchange topicExchange) {
+    public Binding productStockMqBinding(final TopicExchange topicExchange) {
         return BindingBuilder
                 .bind(productStockMq())
                 .to(topicExchange)
@@ -52,7 +52,7 @@ public class RabbitConfiguration {
     }
 
     @Bean
-    public Binding salesConfirmationMqBinding(TopicExchange topicExchange) {
+    public Binding salesConfirmationMqBinding(final TopicExchange topicExchange) {
         return BindingBuilder
                 .bind(salesConfirmationMq())
                 .to(topicExchange)

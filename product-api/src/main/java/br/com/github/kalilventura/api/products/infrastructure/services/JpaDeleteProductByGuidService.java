@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class JpaDeleteProductByGuidService implements DeleteProductByGuidService {
 
-    @Getter(AccessLevel.PRIVATE)
     private final ProductsRepository repository;
 
     public JpaDeleteProductByGuidService(final ProductsRepository productsRepository) {
@@ -18,6 +17,6 @@ public class JpaDeleteProductByGuidService implements DeleteProductByGuidService
 
     @Override
     public void deleteByGuid(final String guid) {
-        getRepository().deleteByGuid(guid);
+        repository.deleteByGuid(guid);
     }
 }

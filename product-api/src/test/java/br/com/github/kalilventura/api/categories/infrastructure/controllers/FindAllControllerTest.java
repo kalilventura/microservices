@@ -1,7 +1,7 @@
 package br.com.github.kalilventura.api.categories.infrastructure.controllers;
 
 import br.com.github.kalilventura.api.categories.domain.builders.CategoryBuilder;
-import br.com.github.kalilventura.api.categories.domain.commands.doubles.FindAllCommandStub;
+import br.com.github.kalilventura.api.categories.domain.commands.doubles.FindAllCategoriesCommandStub;
 import com.google.common.annotations.VisibleForTesting;
 import lombok.NoArgsConstructor;
 import org.junit.jupiter.api.DisplayName;
@@ -24,8 +24,8 @@ class FindAllControllerTest {
         // given
         final var categories = new CategoryBuilder().buildMany(10);
 
-        final var command = new FindAllCommandStub().withOnSuccess(categories);
-        final var controller = new FindAllController(command);
+        final var command = new FindAllCategoriesCommandStub().withOnSuccess(categories);
+        final var controller = new FindAllCategoriesController(command);
 
         // when
         final var response = controller.get();
@@ -40,8 +40,8 @@ class FindAllControllerTest {
     @DisplayName("should respond NO_CONTENT (201) when return an empty list")
     void shouldRespondBadRequest() {
         // given
-        final var command = new FindAllCommandStub().withOnEmpty();
-        final var controller = new FindAllController(command);
+        final var command = new FindAllCategoriesCommandStub().withOnEmpty();
+        final var controller = new FindAllCategoriesController(command);
 
         // when
         final var response = controller.get();

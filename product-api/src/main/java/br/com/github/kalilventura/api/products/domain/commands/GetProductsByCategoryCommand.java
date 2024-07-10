@@ -12,15 +12,14 @@ import java.util.function.Consumer;
 @Component
 public class GetProductsByCategoryCommand {
 
-    @Getter(AccessLevel.PRIVATE)
     private final GetProductsByCategoryService service;
 
-    public GetProductsByCategoryCommand(final GetProductsByCategoryService productsByCategoryService) {
-        service = productsByCategoryService;
+    public GetProductsByCategoryCommand(final GetProductsByCategoryService productsService) {
+        service = productsService;
     }
 
     public void execute(final String guid, final Listeners listeners) {
-        final var products = getService().getProductsByCategory(guid);
+        final var products = service.getProductsByCategory(guid);
         if (products.isEmpty()) {
             listeners.onEmpty().run();
         } else {

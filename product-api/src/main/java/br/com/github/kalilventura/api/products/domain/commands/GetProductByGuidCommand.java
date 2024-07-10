@@ -11,15 +11,14 @@ import java.util.function.Consumer;
 @Component
 public class GetProductByGuidCommand {
 
-    @Getter(AccessLevel.PRIVATE)
     private final GetProductByGuidService service;
 
-    public GetProductByGuidCommand(final GetProductByGuidService getProductByGuidService) {
-        service = getProductByGuidService;
+    public GetProductByGuidCommand(final GetProductByGuidService getService) {
+        service = getService;
     }
 
     public void execute(final String guid, final Listeners listeners) {
-        final var product = getService().getByGuid(guid);
+        final var product = service.getByGuid(guid);
         product.ifPresentOrElse(
                 (entity) -> listeners.onSuccess().accept(entity),
                 () -> listeners.onEmpty().run()

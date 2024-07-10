@@ -33,6 +33,6 @@ public class DummyProductsRepository implements ProductsRepository {
 
     @Override
     public void deleteByGuid(final String guid) {
-        /** do nothing **/
+        // do nothing
     }
 }

@@ -1,5 +1,6 @@
 package br.com.github.kalilventura.api.products.infrastructure.controllers;
 
+import br.com.github.kalilventura.api.global.infrastructure.controllers.ResponseHolder;
 import br.com.github.kalilventura.api.products.domain.commands.InsertProductCommand;
 import br.com.github.kalilventura.api.products.domain.entities.Product;
 import br.com.github.kalilventura.api.products.infrastructure.controllers.requests.ProductRequest;
@@ -16,35 +17,36 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @Validated
 @RestController
 @RequestMapping("${api.v1.endpoint-prefix}")
-public class InsertProductController {
+public final class InsertProductController {
 
-    @Getter(AccessLevel.PRIVATE)
     private final InsertProductCommand command;
 
-    private ResponseEntity<ProductResponse> response;
-
-    public InsertProductController(
-            final InsertProductCommand insertProductCommand) {
-        command = insertProductCommand;
+    public InsertProductController(final InsertProductCommand insertCommand) {
+        command = insertCommand;
     }
 
     @PostMapping("/products")
     public ResponseEntity<ProductResponse> post(@RequestBody final ProductRequest request) {
-        final var listeners = new InsertProductCommand.Listeners(this::onSuccess, this::onError);
-        getCommand().execute(ProductRequestMapper.INSTANCE.mapToEntity(request), listeners);
-        return response;
+        final var wrapper = new ResponseHolder<ProductResponse>();
+        final var listeners = new InsertProductCommand.Listeners(
+                product -> onSuccess(product, wrapper),
+                product -> onError(product, wrapper));
+        command.execute(request.toDomain(), listeners);
+        return wrapper.getResponse();
     }
 
-    private void onSuccess(final Product product) {
-        response = new ResponseEntity<>(ProductResponseMapper.INSTANCE.mapToResponse(product), HttpStatus.CREATED);
+    private void onSuccess(final Product product, final ResponseHolder<ProductResponse> response) {
+        response.setResponse(new ResponseEntity<>(ProductResponse.toResponse(product), HttpStatus.CREATED));
     }
 
-    private void onError(final Product product) {
-        response = ResponseEntity
+    private void onError(final Product product, final ResponseHolder<ProductResponse> response) {
+        response.setResponse(ResponseEntity
                 .badRequest()
-                .body(ProductResponseMapper.INSTANCE.mapToResponse(product));
+                .body(ProductResponse.toResponse(product)));
     }
 }

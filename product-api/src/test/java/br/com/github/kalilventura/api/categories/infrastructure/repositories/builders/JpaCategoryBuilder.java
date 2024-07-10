@@ -4,7 +4,6 @@ import br.com.github.kalilventura.api.categories.domain.builders.CategoryBuilder
 import br.com.github.kalilventura.api.categories.domain.entities.Category;
 import br.com.github.kalilventura.api.categories.infrastructure.repositories.models.JpaCategory;
 import br.com.github.kalilventura.api.global.domain.helpers.GuidHelper;
-import com.github.javafaker.Faker;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
@@ -12,10 +11,9 @@ import java.util.List;
 
 @NoArgsConstructor
 public class JpaCategoryBuilder {
-    private final Faker faker = new Faker();
 
     private String guid = GuidHelper.getRandomValue();
-    private String description = faker.lorem().characters();
+    private String description = "";
 
     public JpaCategoryBuilder withGuid(final String value) {
         guid = value;

@@ -7,6 +7,7 @@ import org.springframework.boot.jdbc.DataSourceBuilder;
 
 @UtilityClass
 public class SqlDataSourceHelper {
+
     private static final int CONNECTION_TIMEOUT = 20_000;
     private static final int MINIMUM_IDLE = 5;
     private static final int MAXIMUM_POOL_SIZE = 10;

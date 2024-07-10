@@ -1,6 +1,8 @@
 package br.com.github.kalilventura.api.products.infrastructure.repositories.models;
 
 import br.com.github.kalilventura.api.categories.infrastructure.repositories.models.JpaCategory;
+import br.com.github.kalilventura.api.products.domain.entities.Product;
+import br.com.github.kalilventura.api.products.infrastructure.services.mappers.ProductMapper;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -48,5 +50,13 @@ public class JpaProduct {
     @PrePersist
     public void prePersist() {
         createdAt = LocalDateTime.now();
+    }
+
+    public static JpaProduct toJpa(final Product product) {
+        return ProductMapper.INSTANCE.mapToJpa(product);
+    }
+
+    public Product toDomain() {
+        return ProductMapper.INSTANCE.mapToEntity(this);
     }
 }

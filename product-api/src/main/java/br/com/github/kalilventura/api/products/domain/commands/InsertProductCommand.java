@@ -12,26 +12,22 @@ import java.util.function.Consumer;
 @Component
 public class InsertProductCommand {
 
-    @Getter(AccessLevel.PRIVATE)
     private final InsertProductService insertService;
-
-    @Getter(AccessLevel.PRIVATE)
-    private final GetProductByNameService nameService;
+    private final GetProductByNameService getService;
 
     public InsertProductCommand(
             final InsertProductService insertProductService,
             final GetProductByNameService getProductByNameService) {
         insertService = insertProductService;
-        nameService = getProductByNameService;
+        getService = getProductByNameService;
     }
 
     public void execute(final Product newProduct, final Listeners listeners) {
-        final var hasProduct = getNameService().getByName(newProduct.name());
+        final var hasProduct = getService.getByName(newProduct.name());
         if (hasProduct.isPresent()) {
             listeners.onExists().accept(newProduct);
         } else {
-            final var product = getInsertService().save(newProduct);
-            listeners.onSuccess().accept(product);
+            listeners.onSuccess().accept(insertService.save(newProduct));
         }
     }
 

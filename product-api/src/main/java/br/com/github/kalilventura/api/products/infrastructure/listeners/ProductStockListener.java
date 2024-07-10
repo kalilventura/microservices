@@ -14,26 +14,24 @@ import org.springframework.stereotype.Component;
 @Component
 public class ProductStockListener {
 
-    @Getter(AccessLevel.PRIVATE)
     private final UpdateProductStockCommand command;
 
-    public ProductStockListener(
-            final UpdateProductStockCommand updateProductStockCommand) {
-        command = updateProductStockCommand;
+    public ProductStockListener(final UpdateProductStockCommand updateCommand) {
+        command = updateCommand;
     }
 
     @RabbitListener(queues = "${app-config.rabbit.queue.product-stock}")
     public void process(final ProductStockMessage message) {
         final var product = ProductStockMessageMapper.INSTANCE.mapToEntity(message);
         final var listeners = new Listeners(this::onSuccess, this::onError);
-        getCommand().execute(product, listeners);
+        command.execute(product, listeners);
     }
 
     private void onSuccess() {
-        log.info("Queue processed: " + getClass());
+        log.info("Queue processed: {}", getClass());
     }
 
     private void onError() {
-        log.error("Queue processing with error: "+ getClass());
+        log.error("Queue processing with error: {}", getClass());
     }
 }

@@ -1,8 +1,7 @@
 package br.com.github.kalilventura.api.products.infrastructure.controllers;
 
+import br.com.github.kalilventura.api.global.infrastructure.controllers.ResponseHolder;
 import br.com.github.kalilventura.api.products.domain.commands.DeleteProductByGuidCommand;
-import lombok.AccessLevel;
-import lombok.Getter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,30 +10,30 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("${api.v1.endpoint-prefix}")
-public class DeleteProductByGuidController {
+public final class DeleteProductByGuidController {
 
-    @Getter(AccessLevel.PRIVATE)
     private final DeleteProductByGuidCommand command;
 
-    private ResponseEntity<Void> response;
-
-    public DeleteProductByGuidController(final DeleteProductByGuidCommand deleteProductByGuidCommand) {
-        command = deleteProductByGuidCommand;
+    public DeleteProductByGuidController(final DeleteProductByGuidCommand deleteCommand) {
+        command = deleteCommand;
     }
 
     @DeleteMapping("/products/{guid}")
     public ResponseEntity<Void> get(@PathVariable("guid") final String guid) {
-        final var listeners = new DeleteProductByGuidCommand.Listeners(this::onSuccess, this::onEmpty);
-        getCommand().execute(guid, listeners);
-        return response;
+        final var wrapper = new ResponseHolder<Void>();
+        final var listeners = new DeleteProductByGuidCommand.Listeners(
+                () -> onSuccess(wrapper),
+                () -> onEmpty(wrapper));
+        command.execute(guid, listeners);
+        return wrapper.getResponse();
     }
 
-    private void onSuccess() {
-        response = ResponseEntity.ok().build();
+    private void onSuccess(final ResponseHolder<Void> response) {
+        response.setResponse(ResponseEntity.ok().build());
     }
 
-    private void onEmpty() {
-        response = ResponseEntity.noContent().build();
+    private void onEmpty(final ResponseHolder<Void> response) {
+        response.setResponse(ResponseEntity.noContent().build());
     }
 
 }

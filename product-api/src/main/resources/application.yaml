@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8080
 
 api:
   name: product-api
@@ -15,11 +15,9 @@ spring:
     change-log:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5433}/${DB_NAME:product-db}
-    username: ${DB_USER:admin}
-    password: ${DB_PASSWORD:123456}
-    initialize: true
-    maxActive: 3
+    url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
   sql:
     init:
       mode: always
@@ -41,11 +39,10 @@ spring:
           batch_size: 500
 
   rabbitmq:
-    host: ${RABBIT_MQ_HOST:localhost}
-    port: ${RABBIT_MQ_PORT:5672}
-    username: ${RABBIT_MQ_USER:guest}
-    password: ${RABBIT_MQ_PASSWORD:guest}
-    virtual-host: ${RABBIT_MQ_VHOST:}
+    host: ${RABBIT_MQ_HOST}
+    port: ${RABBIT_MQ_PORT}
+    username: ${RABBIT_MQ_USER}
+    password: ${RABBIT_MQ_PASSWORD}
 
 app-config:
   rabbit:
@@ -61,8 +58,8 @@ app-config:
 datasource:
   product:
     driverClassName: 'org.postgresql.Driver'
-    url: 'jdbc:postgresql://localhost:5432/product-db'
-    username: 'admin'
-    password: '123456'
+    url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
     liquibase:
       changelog: 'db/changelog/master.yaml'

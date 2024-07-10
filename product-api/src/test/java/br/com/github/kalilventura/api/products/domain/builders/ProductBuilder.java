@@ -1,7 +1,7 @@
 package br.com.github.kalilventura.api.products.domain.builders;
 
+import br.com.github.kalilventura.api.global.domain.helpers.GuidHelper;
 import br.com.github.kalilventura.api.products.domain.entities.Product;
-import com.github.javafaker.Faker;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
@@ -10,9 +10,8 @@ import java.util.List;
 @NoArgsConstructor
 public class ProductBuilder {
 
-    private final Faker faker = new Faker();
-    private String guid = faker.internet().uuid();
-    private String productName = faker.name().name();
+    private String guid = GuidHelper.getRandomValue();
+    private String productName = "";
 
     public ProductBuilder withGuid(final String productGuid) {
         guid = productGuid;
@@ -29,7 +28,7 @@ public class ProductBuilder {
                 .builder()
                 .guid(guid)
                 .name(productName)
-                .quantity(faker.number().randomNumber(10, true))
+                .quantity(10L)
                 .build();
     }
 

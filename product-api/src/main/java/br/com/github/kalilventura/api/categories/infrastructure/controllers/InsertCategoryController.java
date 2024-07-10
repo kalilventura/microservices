@@ -3,13 +3,9 @@ package br.com.github.kalilventura.api.categories.infrastructure.controllers;
 import br.com.github.kalilventura.api.categories.domain.commands.InsertCategoryCommand;
 import br.com.github.kalilventura.api.categories.domain.commands.InsertCategoryCommand.Listeners;
 import br.com.github.kalilventura.api.categories.domain.entities.Category;
-import br.com.github.kalilventura.api.categories.infrastructure.controllers.mappers.CategoryMapper;
 import br.com.github.kalilventura.api.categories.infrastructure.controllers.requests.InsertCategoryRequest;
-import br.com.github.kalilventura.api.categories.infrastructure.controllers.requests.mappers.InsertCategoryMapper;
 import br.com.github.kalilventura.api.categories.infrastructure.controllers.responses.CategoryResponse;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
+import br.com.github.kalilventura.api.global.infrastructure.controllers.ResponseHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -21,13 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 @Validated
 @RestController
 @RequestMapping("${api.v1.endpoint-prefix}")
-public class InsertCategoryController {
+public final class InsertCategoryController {
 
-    @Getter(AccessLevel.PRIVATE)
     private final InsertCategoryCommand command;
-
-    @Setter(AccessLevel.PRIVATE)
-    private ResponseEntity<CategoryResponse> response;
 
     public InsertCategoryController(final InsertCategoryCommand insertCategoryCommand) {
         command = insertCategoryCommand;
@@ -35,18 +27,17 @@ public class InsertCategoryController {
 
     @PostMapping("/categories")
     public ResponseEntity<CategoryResponse> post(@RequestBody final InsertCategoryRequest request) {
-        final var listeners = new Listeners(this::onCreated, this::onExists);
-        final var entity = InsertCategoryMapper.INSTANCE.mapToEntity(request);
-
-        getCommand().execute(entity, listeners);
-        return response;
+        final var wrapper = new ResponseHolder<CategoryResponse>();
+        final var listeners = new Listeners(category -> onCreated(category, wrapper), () -> onExists(wrapper));
+        command.execute(request.toDomain(), listeners);
+        return wrapper.getResponse();
     }
 
-    private void onCreated(final Category category) {
-        setResponse(new ResponseEntity<>(CategoryMapper.INSTANCE.mapToResponse(category), HttpStatus.CREATED));
+    private void onCreated(final Category category, final ResponseHolder<CategoryResponse> response) {
+        response.setResponse(new ResponseEntity<>(CategoryResponse.toResponse(category), HttpStatus.CREATED));
     }
 
-    private void onExists() {
-        setResponse(ResponseEntity.badRequest().build());
+    private void onExists(final ResponseHolder<CategoryResponse> response) {
+        response.setResponse(ResponseEntity.badRequest().build());
     }
 }

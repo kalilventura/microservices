@@ -9,15 +9,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class UpdateProductStockCommand {
 
-    @Getter(AccessLevel.PRIVATE)
     private final UpdateProductStockService service;
 
-    public UpdateProductStockCommand(final UpdateProductStockService updateProductStockService) {
-        service = updateProductStockService;
+    public UpdateProductStockCommand(final UpdateProductStockService updateService) {
+        service = updateService;
     }
 
     public void execute(final Product product, final Listeners listeners) {
-        getService().updateStock(product);
+        service.updateStock(product);
         listeners.onSuccess().run();
     }
 

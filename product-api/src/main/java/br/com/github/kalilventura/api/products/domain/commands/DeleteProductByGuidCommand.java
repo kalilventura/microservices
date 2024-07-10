@@ -9,23 +9,20 @@ import org.springframework.stereotype.Component;
 @Component
 public class DeleteProductByGuidCommand {
 
-    @Getter(AccessLevel.PRIVATE)
     private final DeleteProductByGuidService deleteService;
-
-    @Getter(AccessLevel.PRIVATE)
     private final GetProductByGuidService findService;
 
     public DeleteProductByGuidCommand(
-            final DeleteProductByGuidService deleteProductByGuidService,
-            final GetProductByGuidService getProductByGuidService) {
-        deleteService = deleteProductByGuidService;
-        findService = getProductByGuidService;
+            final DeleteProductByGuidService deleteProductService,
+            final GetProductByGuidService getService) {
+        deleteService = deleteProductService;
+        findService = getService;
     }
 
     public void execute(final String guid, final Listeners listeners) {
-        getFindService().getByGuid(guid)
+        findService.getByGuid(guid)
                 .ifPresentOrElse(product -> {
-                    getDeleteService().deleteByGuid(guid);
+                    deleteService.deleteByGuid(guid);
                     listeners.onSuccess().run();
                     }, () -> listeners.onEmpty().run());
     }
