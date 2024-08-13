@@ -7,6 +7,7 @@ import br.com.github.kalilventura.api.products.infrastructure.repositories.model
 import br.com.github.kalilventura.api.products.infrastructure.services.mappers.ProductMapper;
 import lombok.AccessLevel;
 import lombok.Getter;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -21,6 +22,7 @@ public class JpaGetProductByGuidService implements GetProductByGuidService {
     }
 
     @Override
+    @Cacheable(value = "products")
     public Optional<Product> getByGuid(final String guid) {
         final var product = repository.findByGuid(guid);
         return product.map(JpaProduct::toDomain);

@@ -2,10 +2,7 @@ package br.com.github.kalilventura.api.products.infrastructure.listeners;
 
 import br.com.github.kalilventura.api.products.domain.commands.UpdateProductStockCommand;
 import br.com.github.kalilventura.api.products.domain.commands.UpdateProductStockCommand.Listeners;
-import br.com.github.kalilventura.api.products.infrastructure.listeners.mappers.ProductStockMessageMapper;
 import br.com.github.kalilventura.api.products.infrastructure.listeners.messages.ProductStockMessage;
-import lombok.AccessLevel;
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
@@ -22,9 +19,8 @@ public class ProductStockListener {
 
     @RabbitListener(queues = "${app-config.rabbit.queue.product-stock}")
     public void process(final ProductStockMessage message) {
-        final var product = ProductStockMessageMapper.INSTANCE.mapToEntity(message);
         final var listeners = new Listeners(this::onSuccess, this::onError);
-        command.execute(product, listeners);
+        command.execute(message.toDomain(), listeners);
     }
 
     private void onSuccess() {

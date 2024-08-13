@@ -1,0 +1,31 @@
+server:
+  port: 8082
+
+api:
+  name: sales-api
+  version: '1.0.0'
+  v1:
+    name: 'v1'
+    endpoint-prefix: 'v1'
+
+spring:
+  application:
+    name: '${api.name}'
+
+  rabbitmq:
+    host: ${RABBIT_MQ_HOST:localhost}
+    port: ${RABBIT_MQ_PORT:5672}
+    username: ${RABBIT_MQ_USER:guest}
+    password: ${RABBIT_MQ_PASSWORD:guest}
+    virtual-host: ${RABBIT_MQ_VHOST:}
+
+app-config:
+  rabbit:
+    exchange:
+      product: product.topic
+    queue:
+      product-stock: product-stock-update.queue
+      sales-confirmation: sales-confirmation.queue
+    routingKey:
+      product-stock: product-stock-update.routingKey
+      sales-confirmation: sales-confirmation.routingKey

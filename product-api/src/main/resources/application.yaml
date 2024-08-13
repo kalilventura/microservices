@@ -12,7 +12,7 @@ spring:
   application:
     name: '${api.name}'
   liquibase:
-    change-log:
+    change-log: db/changelog/master.yaml
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
@@ -37,12 +37,16 @@ spring:
         order_updates: true
         jdbc:
           batch_size: 500
-
   rabbitmq:
     host: ${RABBIT_MQ_HOST}
     port: ${RABBIT_MQ_PORT}
     username: ${RABBIT_MQ_USER}
     password: ${RABBIT_MQ_PASSWORD}
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+      password: ${REDIS_PASSWORD}
 
 app-config:
   rabbit:

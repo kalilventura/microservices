@@ -4,6 +4,7 @@ import br.com.github.kalilventura.api.products.domain.services.DeleteProductByGu
 import br.com.github.kalilventura.api.products.infrastructure.repositories.contracts.ProductsRepository;
 import lombok.AccessLevel;
 import lombok.Getter;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,6 +17,7 @@ public class JpaDeleteProductByGuidService implements DeleteProductByGuidService
     }
 
     @Override
+    @CacheEvict("products")
     public void deleteByGuid(final String guid) {
         repository.deleteByGuid(guid);
     }

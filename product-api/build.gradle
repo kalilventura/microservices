@@ -10,7 +10,7 @@ plugins {
 }
 
 group = 'br.com.github.kalilventura'
-version = '0.0.1'
+version = '1.0.0'
 description = ''
 
 configurations {
@@ -61,6 +61,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
     implementation 'org.springframework.boot:spring-boot-devtools'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
     // MapStruct
     implementation "org.mapstruct:mapstruct:${mapstructVersion}"
