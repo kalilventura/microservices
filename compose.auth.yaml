@@ -1,0 +1,26 @@
+services:
+  auth-db:
+    image: postgres:15.2
+    container_name: auth-db
+    restart: always
+    networks:
+      - sales-network
+    env_file:
+      - ./env/auth-db.env
+    ports:
+      - 5432:5432
+  auth-api:
+    build: './auth-api'
+    container_name: auth-api
+    depends_on:
+      - auth-db
+      - product-api
+    networks:
+      - sales-network
+    env_file:
+      - ./env/auth-api.env
+    ports:
+      - 8083:8080
+networks:
+  sales-network:
+    driver: bridge

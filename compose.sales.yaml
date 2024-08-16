@@ -1,0 +1,39 @@
+services:
+  sales-db:
+      image: mongo:latest
+      container_name: sales-db
+      restart: always
+      networks:
+        - sales-network
+      env_file:
+      - ./env/sales-mongo.env
+      ports:
+        - 27017:27017
+        - 28017:28017
+  sales-rabbit:
+    image: rabbitmq:3-management
+    container_name: sales_rabbit
+    hostname: sales_rabbit
+    networks:
+      - sales-network
+    ports:
+      - 5672:5672
+      - 25676:25676
+      - 15672:15672
+    env_file:
+      - ./env/sales-rabbit.env
+  sales-api:
+    build:
+      context: './sales-api'
+      dockerfile: '.dev/dev.Dockerfile'
+    container_name: sales_api
+    env_file:
+      - ./env/sales.env
+    ports:
+      - 8082:8080
+    depends_on:
+      - sales-db
+      - sales-rabbit
+      - product-api
+    networks:
+      - sales-network

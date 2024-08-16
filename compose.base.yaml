@@ -1,0 +1,3 @@
+networks:
+  sales-network:
+    driver: bridge
