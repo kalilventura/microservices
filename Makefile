@@ -1,2 +1,8 @@
 run:
-	docker compose -f compose.base.yaml -f compose.product.yaml -f compose.sales.yaml -f compose.auth.yaml up
+	docker compose -f compose.base.yaml -f compose.product.yaml -f compose.sales.yaml -f compose.auth.yaml -f compose.rabbit.yaml up
+
+product:
+	docker compose -f compose.rabbit.yaml -f compose.product.yaml -f up
+
+sales:
+	docker compose -f compose.rabbit.yaml -f docker.sales.yaml up
