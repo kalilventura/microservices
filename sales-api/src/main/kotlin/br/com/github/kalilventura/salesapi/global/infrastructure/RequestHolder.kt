@@ -3,9 +3,11 @@ import org.springframework.http.ResponseEntity
 
 class ResponseHolder<T> {
 
-    var response: ResponseEntity<T>
+    var response: ResponseEntity<T> = TODO()
         get() {
-            return response;
+            return field
         }
-        set(value) {}
+        set(value) {
+            field = value
+        }
 }

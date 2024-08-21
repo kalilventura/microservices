@@ -19,6 +19,11 @@ spring:
     password: ${RABBIT_MQ_PASSWORD:guest}
     virtual-host: ${RABBIT_MQ_VHOST:}
 
+  data:
+    mongodb:
+      uri: ${MONGO_URI}
+      database: ${MONGO_DATABASE}
+
 app-config:
   rabbit:
     exchange:

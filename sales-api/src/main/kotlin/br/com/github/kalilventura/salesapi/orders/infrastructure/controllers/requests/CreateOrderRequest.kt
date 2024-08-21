@@ -1,12 +1,20 @@
 package br.com.github.kalilventura.salesapi.orders.infrastructure.controllers.requests
 
 import br.com.github.kalilventura.salesapi.orders.domain.entities.Order
-import br.com.github.kalilventura.salesapi.orders.infrastructure.controllers.mappers.OrderMapper
-import br.com.github.kalilventura.salesapi.products.infrastructure.controllers.requests.ProductRequest
+import br.com.github.kalilventura.salesapi.orders.domain.entities.Status
+import br.com.github.kalilventura.salesapi.products.domain.entities.Product
+import java.time.LocalDateTime
+import java.util.*
 
-class CreateOrderRequest(val products: List<ProductRequest>) {
-
+data class CreateOrderRequest(val products: List<ProductRequest>, val discount: Double) {
     fun toDomain() : Order {
-        return OrderMapper.mapToEntity(this)
+        val products = this.products.map { req -> Product(req.id, req.quantity, req.unitPrice) }
+        return Order.Builder()
+            .createdAt(LocalDateTime.now())
+            .status(Status.PENDING)
+            .transactionId(UUID.randomUUID().toString())
+            .products(products)
+            .discount(discount)
+            .build()
     }
 }

@@ -5,4 +5,4 @@ product:
 	docker compose -f compose.base.yaml -f compose.rabbit.yaml -f compose.product.yaml up
 
 sales:
-	docker compose -f compose.rabbit.yaml -f docker.sales.yaml up
+	docker compose -f compose.base.yaml -f compose.rabbit.yaml -f compose.sales.yaml up

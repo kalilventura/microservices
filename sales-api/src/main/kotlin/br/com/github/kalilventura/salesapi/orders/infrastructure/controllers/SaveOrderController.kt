@@ -1,8 +1,7 @@
 package br.com.github.kalilventura.salesapi.orders.infrastructure.controllers
 
-import br.com.github.kalilventura.salesapi.global.infrastructure.ResponseHolder
+import br.com.github.kalilventura.salesapi.global.infrastructure.Result
 import br.com.github.kalilventura.salesapi.orders.domain.commands.SaveOrderCommand
-import br.com.github.kalilventura.salesapi.orders.domain.entities.Order
 import br.com.github.kalilventura.salesapi.orders.infrastructure.controllers.requests.CreateOrderRequest
 import br.com.github.kalilventura.salesapi.orders.infrastructure.controllers.responses.CreateOrderResponse
 import org.springframework.http.HttpStatus
@@ -15,22 +14,13 @@ class SaveOrderController(val command: SaveOrderCommand) {
 
     @PostMapping("/orders")
     fun execute(@RequestBody request: CreateOrderRequest): ResponseEntity<CreateOrderResponse> {
-        val wrapper = ResponseHolder<CreateOrderResponse>()
-
-        val listeners = SaveOrderCommand.Listeners(
-            {order -> onSuccess(order, wrapper)},
-            {onError(wrapper)}
-        )
-
-        command.execute(request.toDomain(), listeners)
-        return wrapper.response
-    }
-
-    fun onSuccess(order: Order, wrapper: ResponseHolder<CreateOrderResponse>) {
-        wrapper.response = ResponseEntity(CreateOrderResponse.toResponse(order), HttpStatus.CREATED)
-    }
-
-    fun onError(wrapper: ResponseHolder<CreateOrderResponse>) {
-        wrapper.response = ResponseEntity.badRequest().build()
+        return when (val result = command.execute(request.toDomain())) {
+            is Result.Success -> {
+                ResponseEntity(CreateOrderResponse.toResponse(result.data), HttpStatus.CREATED)
+            }
+            is Result.Error -> {
+                ResponseEntity.badRequest().build()
+            }
+        }
     }
 }

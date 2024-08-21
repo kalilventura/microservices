@@ -6,4 +6,4 @@ import org.springframework.data.mongodb.repository.MongoRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-public interface OrdersSchemaRepository: OrdersRepository, MongoRepository<OrderSchema, String>
+interface OrdersSchemaRepository: OrdersRepository, MongoRepository<OrderSchema, String>

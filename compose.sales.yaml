@@ -6,22 +6,22 @@ services:
       networks:
         - sales-network
       env_file:
-      - ./env/sales-mongo.env
+      - ./env/sales-db.env
       ports:
         - 27017:27017
         - 28017:28017
-  sales-api:
-    build:
-      context: './sales-api'
-      dockerfile: '.dev/dev.Dockerfile'
-    container_name: sales_api
-    env_file:
-      - ./env/sales.env
-    ports:
-      - 8082:8080
-    depends_on:
-      - sales-db
-      - sales-rabbit
-      - product-api
-    networks:
-      - sales-network
+  # sales-api:
+  #   build:
+  #     context: './sales-api'
+  #     dockerfile: '.dev/dev.Dockerfile'
+  #   container_name: sales_api
+  #   env_file:
+  #     - ./env/sales.env
+  #   ports:
+  #     - 8082:8080
+  #   depends_on:
+  #     - sales-db
+  #     - sales-rabbit
+  #     - product-api
+  #   networks:
+  #     - sales-network
