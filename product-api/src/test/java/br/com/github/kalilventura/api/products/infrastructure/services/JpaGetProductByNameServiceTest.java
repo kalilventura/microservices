@@ -1,5 +1,6 @@
 package br.com.github.kalilventura.api.products.infrastructure.services;
 
+import br.com.github.kalilventura.api.categories.infrastructure.repositories.builders.JpaCategoryBuilder;
 import br.com.github.kalilventura.api.products.infrastructure.builders.JpaProductBuilder;
 import br.com.github.kalilventura.api.products.infrastructure.repositories.doubles.DummyProductsRepository;
 import br.com.github.kalilventura.api.products.infrastructure.repositories.doubles.InMemoryProductsRepository;
@@ -21,7 +22,10 @@ class JpaGetProductByNameServiceTest {
     void getByNameSuccessfully() {
         // given
         final var name = "spoon";
-        final var products = new JpaProductBuilder().withName(name).buildMany(1);
+        final var products = new JpaProductBuilder()
+            .withName(name)
+            .withCategory(new JpaCategoryBuilder().buildDefault())
+            .buildMany(1);
 
         final var repository = new InMemoryProductsRepository(products);
         final var service = new JpaGetProductByNameService(repository);

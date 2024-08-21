@@ -28,7 +28,9 @@ public final class InsertCategoryController {
     @PostMapping("/categories")
     public ResponseEntity<CategoryResponse> post(@RequestBody final InsertCategoryRequest request) {
         final var wrapper = new ResponseHolder<CategoryResponse>();
-        final var listeners = new Listeners(category -> onCreated(category, wrapper), () -> onExists(wrapper));
+        final var listeners = new Listeners(
+                category -> onCreated(category, wrapper),
+                () -> onExists(wrapper));
         command.execute(request.toDomain(), listeners);
         return wrapper.getResponse();
     }

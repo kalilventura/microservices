@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 public class ProductRequestBuilder {
 
     public ProductRequest buildDefault() {
-        return new ProductRequest("");
+        return new ProductRequest("", 0L, "");
     }
 }

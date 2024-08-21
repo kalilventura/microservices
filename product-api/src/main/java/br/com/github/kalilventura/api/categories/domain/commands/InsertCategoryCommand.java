@@ -22,14 +22,13 @@ public class InsertCategoryCommand {
         findService = findCategoryService;
     }
 
-    public void execute(final Category categoryToInsert, final Listeners listeners) {
-        final var category = findService.findByDescription(categoryToInsert.description());
-        if (category.isPresent()) {
-            listeners.onExists().run();
-        } else {
-            final var inserted = insertService.save(categoryToInsert);
-            listeners.onCreated().accept(inserted);
-        }
+    public void execute(final Category category, final Listeners listeners) {
+        findService
+            .findByDescription(category.description())
+            .ifPresentOrElse(
+                existent -> listeners.onExists().run(),
+                () -> listeners.onCreated()
+                    .accept(insertService.save(category)));
     }
 
     public record Listeners(Consumer<Category> onCreated, Runnable onExists) {}

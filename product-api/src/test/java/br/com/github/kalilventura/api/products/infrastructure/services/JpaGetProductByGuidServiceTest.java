@@ -1,5 +1,6 @@
 package br.com.github.kalilventura.api.products.infrastructure.services;
 
+import br.com.github.kalilventura.api.categories.infrastructure.repositories.builders.JpaCategoryBuilder;
 import br.com.github.kalilventura.api.global.domain.helpers.GuidHelper;
 import br.com.github.kalilventura.api.products.infrastructure.builders.JpaProductBuilder;
 import br.com.github.kalilventura.api.products.infrastructure.repositories.doubles.InMemoryProductsRepository;
@@ -24,7 +25,10 @@ class JpaGetProductByGuidServiceTest {
         // given
         final var guid = GuidHelper.getRandomValue();
 
-        final var product = new JpaProductBuilder().withGuid(guid).buildDefault();
+        final var product = new JpaProductBuilder()
+            .withGuid(guid)
+            .withCategory(new JpaCategoryBuilder().buildDefault())
+            .buildDefault();
 
         final var repository = new InMemoryProductsRepository(List.of(product));
         final var service = new JpaGetProductByGuidService(repository);

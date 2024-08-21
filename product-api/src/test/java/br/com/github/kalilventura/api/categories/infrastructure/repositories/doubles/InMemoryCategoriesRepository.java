@@ -18,6 +18,16 @@ public class InMemoryCategoriesRepository implements CategoriesRepository {
     }
 
     @Override
+    public Optional<JpaCategory> findByGuid(final String guid) {
+        return items.stream().filter(jpaCategory -> jpaCategory.getGuid().equals(guid)).findFirst();
+    }
+
+    @Override
+    public Optional<JpaCategory> findById(final Long id) {
+        return items.stream().filter(jpa -> jpa.getId().equals(id)).findFirst();
+    }
+
+    @Override
     public Optional<JpaCategory> findByDescription(final String description) {
         return items.stream().filter(jpa -> jpa.getDescription().equals(description)).findFirst();
     }

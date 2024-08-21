@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Builder
@@ -49,14 +50,26 @@ public class JpaProduct {
 
     @PrePersist
     public void prePersist() {
+        guid = UUID.randomUUID().toString();
         createdAt = LocalDateTime.now();
     }
 
     public static JpaProduct toJpa(final Product product) {
-        return ProductMapper.INSTANCE.mapToJpa(product);
+        return JpaProduct
+            .builder()
+            .guid(product.guid())
+            .name(product.name())
+            .quantity(product.quantity())
+            .build();
     }
 
     public Product toDomain() {
-        return ProductMapper.INSTANCE.mapToEntity(this);
+        return Product
+            .builder()
+            .guid(guid)
+            .name(name)
+            .quantity(quantity)
+            .categoryId(category.getGuid())
+            .build();
     }
 }

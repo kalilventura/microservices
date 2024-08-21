@@ -12,6 +12,16 @@ import java.util.Optional;
 public class DummyCategoriesRepository implements CategoriesRepository {
 
     @Override
+    public Optional<JpaCategory> findByGuid(final String guid) {
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<JpaCategory> findById(final Long id) {
+        return Optional.empty();
+    }
+
+    @Override
     public Optional<JpaCategory> findByDescription(final String description) {
         return Optional.empty();
     }

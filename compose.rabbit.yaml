@@ -1,12 +1,14 @@
-sales-rabbit:
-  image: rabbitmq:3-management
-  container_name: sales_rabbit
-  hostname: sales_rabbit
-  ports:
-    - 5672:5672
-    - 25676:25676
-    - 15672:15672
-  env_file:
-    - ./env/sales-rabbit.env
-  networks:
-    - sales-network
+services:
+  sales-rabbit:
+    image: rabbitmq:3-management
+    container_name: sales_rabbit
+    hostname: sales_rabbit
+    ports:
+      - 5672:5672
+      - 25676:25676
+      - 15672:15672
+    env_file:
+      - ./env/rabbit.env
+    networks:
+      - sales-network
+  

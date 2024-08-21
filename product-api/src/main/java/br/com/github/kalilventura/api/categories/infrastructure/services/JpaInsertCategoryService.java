@@ -17,7 +17,8 @@ public class JpaInsertCategoryService implements InsertCategoryService {
 
     @Override
     public Category save(final Category category) {
-        final var newCategory = repository.save(JpaCategory.toJpa(category));
+        final var jpa = JpaCategory.toJpa(category);
+        final var newCategory = repository.save(jpa);
         return newCategory.toDomain();
     }
 }

@@ -22,12 +22,12 @@ public class InsertProductCommand {
         getService = getProductByNameService;
     }
 
-    public void execute(final Product newProduct, final Listeners listeners) {
-        final var hasProduct = getService.getByName(newProduct.name());
+    public void execute(final Product product, final Listeners listeners) {
+        final var hasProduct = getService.getByName(product.name());
         if (hasProduct.isPresent()) {
-            listeners.onExists().accept(newProduct);
+            listeners.onExists().accept(product);
         } else {
-            listeners.onSuccess().accept(insertService.save(newProduct));
+            listeners.onSuccess().accept(insertService.save(product));
         }
     }
 

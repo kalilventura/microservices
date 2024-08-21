@@ -12,6 +12,10 @@ import java.util.Optional;
 public interface JpaProductsRepository extends ProductsRepository, CrudRepository<JpaProduct, Long> {
 
     @Override
-    @Query("SELECT P FROM JpaProduct AS P WHERE P.guid = :guid")
+    @Query("SELECT P FROM JpaProduct AS P JOIN FETCH P.category WHERE P.guid = :guid")
     Optional<JpaProduct> findByGuid(String guid);
+
+    @Override
+    @Query("SELECT P FROM JpaProduct AS P JOIN FETCH P.category WHERE P.name = :name")
+    Optional<JpaProduct> findByName(String name);
 }

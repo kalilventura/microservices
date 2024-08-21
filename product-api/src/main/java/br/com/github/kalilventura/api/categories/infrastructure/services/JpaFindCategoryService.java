@@ -19,6 +19,11 @@ public class JpaFindCategoryService implements FindCategoryService {
     }
 
     @Override
+    public Optional<Category> findById(final Long id) {
+        return repository.findById(id).map(JpaCategory::toDomain);
+    }
+
+    @Override
     public Optional<Category> findByDescription(final String description) {
         final var category = repository.findByDescription(description);
         return category.map(JpaCategory::toDomain);

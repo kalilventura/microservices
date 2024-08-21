@@ -6,5 +6,4 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @NoArgsConstructor
 @ConfigurationProperties(prefix = "datasource.product")
-public class ApiSqlDataSourceProperties extends DataSourceProperties {
-}
+public class ApiSqlDataSourceProperties extends DataSourceProperties {}

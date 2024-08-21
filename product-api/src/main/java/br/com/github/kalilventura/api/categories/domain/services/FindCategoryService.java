@@ -9,6 +9,8 @@ import java.util.Optional;
 
 public interface FindCategoryService {
 
+    Optional<Category> findById(Long id);
+
     Optional<Category> findByDescription(String description);
 
     List<Category> findAll();

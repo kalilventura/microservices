@@ -1,0 +1,18 @@
+databaseChangeLog:
+    - changeSet:
+          id: '00-alter-table-category'
+          author: 'kalilventura'
+          context: 'prod, test'
+          preConditions:
+              - tableExists:
+                    tableName: 'category'
+          changes:
+              - dropNotNullConstraint:
+                    columnName: 'updated_at'
+                    schemaName: 'public'
+                    tableName: 'category'
+          rollback:
+              - addNotNullConstraint:
+                    columnName: 'updated_at'
+                    tableName: 'category'
+                    schemaName: 'public'

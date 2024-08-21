@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.3.1'
+    id 'org.springframework.boot' version '3.3.2'
     id 'io.spring.dependency-management' version '1.1.6'
     id 'idea'
     id 'jacoco'
@@ -35,15 +35,15 @@ repositories {
 
 ext {
     springCloudVersion = '2023.0.2'
-    springBootVersion = '3.3.1'
-    mapstructVersion = '1.5.3.Final'
+    springBootVersion = '3.3.2'
+    mapstructVersion = '1.6.0'
     lombokVersion = '1.18.34'
-    liquibaseVersion = '4.28.0'
-    wiremockVersion = '3.5.4'
+    liquibaseVersion = '4.29.1'
+    wiremockVersion = '3.9.1'
     mockitoVersion = '5.12.0'
-    guavaVersion = '33.2.1-jre'
+    guavaVersion = '33.3.0-jre'
     annotationsVersion = '24.1.0'
-    testcontainersVersion = '1.19.8'
+    testcontainersVersion = '1.20.1'
     postgresVersion = '42.7.3'
 }
 
@@ -102,4 +102,10 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+tasks.withType(JavaCompile).configureEach {
+    configure(options) {
+        options.compilerArgs << '-parameters'
+    }
 }

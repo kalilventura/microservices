@@ -3,6 +3,7 @@ package br.com.github.kalilventura.api.products.infrastructure.controllers;
 import br.com.github.kalilventura.api.global.domain.helpers.GuidHelper;
 import br.com.github.kalilventura.api.products.domain.builders.ProductBuilder;
 import br.com.github.kalilventura.api.products.domain.commands.doubles.GetProductByGuidCommandStub;
+import br.com.github.kalilventura.api.products.domain.commands.doubles.GetProductByNameCommandStub;
 import com.google.common.annotations.VisibleForTesting;
 import lombok.NoArgsConstructor;
 import org.junit.jupiter.api.DisplayName;
@@ -14,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @Tag("unit")
 @NoArgsConstructor
-class GetProductByGuidControllerTest {
+class GetProductByCriteriaControllerTest {
 
     @Test
     @VisibleForTesting
@@ -24,11 +25,12 @@ class GetProductByGuidControllerTest {
         final var guid = GuidHelper.getRandomValue();
         final var product = new ProductBuilder().buildDefault();
         final var command = new GetProductByGuidCommandStub().withOnSuccess(product);
+        final var nameCommand = new GetProductByNameCommandStub();
 
-        final var controller = new GetProductByGuidController(command);
+        final var controller = new GetProductByCriteriaController(command, nameCommand);
 
         // when
-        final var response = controller.get(guid);
+        final var response = controller.get(guid, null);
 
         // then
         assertNotNull(response.getBody(), "response body has data");
@@ -41,12 +43,13 @@ class GetProductByGuidControllerTest {
     void shouldRespondNoContent() {
         // given
         final var guid = GuidHelper.getRandomValue();
-
         final var command = new GetProductByGuidCommandStub().withOnEmpty();
-        final var controller = new GetProductByGuidController(command);
+        final var nameCommand = new GetProductByNameCommandStub();
+
+        final var controller = new GetProductByCriteriaController(command, nameCommand);
 
         // when
-        final var response = controller.get(guid);
+        final var response = controller.get(guid, null);
 
         // then
         assertNull(response.getBody());

@@ -11,6 +11,7 @@ import java.util.List;
 public class ProductBuilder {
 
     private String guid = GuidHelper.getRandomValue();
+    private String category = GuidHelper.getRandomValue();
     private String productName = "";
 
     public ProductBuilder withGuid(final String productGuid) {
@@ -23,12 +24,18 @@ public class ProductBuilder {
         return this;
     }
 
+    public ProductBuilder withCategory(final String value) {
+        category = value;
+        return this;
+    }
+
     public Product buildDefault() {
         return Product
                 .builder()
                 .guid(guid)
                 .name(productName)
                 .quantity(10L)
+                .categoryId(category)
                 .build();
     }
 

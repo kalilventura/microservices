@@ -1,5 +1,8 @@
 package br.com.github.kalilventura.api.products.infrastructure.services;
 
+import br.com.github.kalilventura.api.categories.infrastructure.repositories.builders.JpaCategoryBuilder;
+import br.com.github.kalilventura.api.categories.infrastructure.repositories.doubles.DummyCategoriesRepository;
+import br.com.github.kalilventura.api.categories.infrastructure.repositories.doubles.InMemoryCategoriesRepository;
 import br.com.github.kalilventura.api.global.domain.helpers.GuidHelper;
 import br.com.github.kalilventura.api.products.domain.builders.ProductBuilder;
 import br.com.github.kalilventura.api.products.infrastructure.builders.JpaProductBuilder;
@@ -25,14 +28,20 @@ class JpaInsertProductServiceTest {
     void saveSuccessfully() {
         // given
         final var guid = GuidHelper.getRandomValue();
+        final var category = new JpaCategoryBuilder().buildDefault();
+        final var product = new JpaProductBuilder()
+            .withGuid(guid)
+            .withCategory(category)
+            .buildDefault();
 
-        final var product = new JpaProductBuilder().withGuid(guid).buildDefault();
+        final var entity = new ProductBuilder().withCategory(category.getGuid()).buildDefault();
 
         final var repository = new InMemoryProductsRepository(List.of(product));
-        final var service = new JpaInsertProductService(repository);
+        final var categoryRepository = new InMemoryCategoriesRepository(List.of(category));
+        final var service = new JpaInsertProductService(repository, categoryRepository);
 
         // when
-        final var retrieved = service.save(new ProductBuilder().buildDefault());
+        final var retrieved = service.save(entity);
 
         // then
         assertTrue(Objects.nonNull(retrieved), "inserted a new product");

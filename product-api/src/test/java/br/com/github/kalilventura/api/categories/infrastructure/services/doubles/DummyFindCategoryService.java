@@ -12,6 +12,11 @@ import java.util.Optional;
 public class DummyFindCategoryService implements FindCategoryService {
 
     @Override
+    public Optional<Category> findById(final Long id) {
+        return Optional.empty();
+    }
+
+    @Override
     public Optional<Category> findByDescription(final String description) {
         return Optional.empty();
     }

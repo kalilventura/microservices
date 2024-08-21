@@ -1,6 +1,7 @@
 package br.com.github.kalilventura.api.categories.infrastructure.controllers;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 import br.com.github.kalilventura.api.global.infrastructure.controllers.ResponseHolder;
 import org.springframework.http.ResponseEntity;
@@ -26,17 +27,19 @@ public final class FindAllCategoriesController {
     @GetMapping("/categories")
     public @ResponseBody ResponseEntity<List<CategoryResponse>> get() {
         final var wrapper = new ResponseHolder<List<CategoryResponse>>();
-        final var listeners = new FindAllCategoriesCommand.Listeners(categories -> onSuccess(categories, wrapper), () -> onEmpty(wrapper));
+        final var listeners = new FindAllCategoriesCommand.Listeners(onSuccess(wrapper), onEmpty(wrapper));
         command.execute(listeners);
         return wrapper.getResponse();
     }
 
-    private void onSuccess(final List<Category> categories, final ResponseHolder<List<CategoryResponse>> response) {
-        final var content = categories.stream().map(CategoryResponse::toResponse).toList();
-        response.setResponse(ResponseEntity.ok(content));
+    private Consumer<List<Category>> onSuccess(final ResponseHolder<List<CategoryResponse>> response) {
+        return categories -> {
+            final var content = categories.stream().map(CategoryResponse::toResponse).toList();
+            response.setResponse(ResponseEntity.ok(content));
+        };
     }
 
-    private void onEmpty(final ResponseHolder<List<CategoryResponse>> response) {
-        response.setResponse(ResponseEntity.noContent().build());
+    private Runnable onEmpty(final ResponseHolder<List<CategoryResponse>> response) {
+        return () -> response.setResponse(ResponseEntity.noContent().build());
     }
 }

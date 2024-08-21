@@ -7,11 +7,11 @@ import org.springframework.stereotype.Component;
 import java.util.function.Consumer;
 
 @Component
-public class FindByIdCategoryCommand {
+public class FindCategoryByIdCommand {
 
     private final FindCategoryService service;
 
-    public FindByIdCategoryCommand(final FindCategoryService findService) {
+    public FindCategoryByIdCommand(final FindCategoryService findService) {
         service = findService;
     }
 

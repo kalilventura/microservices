@@ -21,6 +21,7 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Builder
@@ -30,11 +31,11 @@ import java.util.List;
 public class JpaCategory {
 
     @Id
+    @Getter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Getter
-    @Setter
     @Column(nullable = false)
     private String guid;
 
@@ -43,7 +44,8 @@ public class JpaCategory {
     @Column(nullable = false)
     private String description;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @Getter
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "category")
     private List<JpaProduct> products;
 
     @Getter
@@ -56,6 +58,7 @@ public class JpaCategory {
 
     @PrePersist
     public void prePersist() {
+        guid = UUID.randomUUID().toString();
         createdAt = LocalDateTime.now();
     }
 
@@ -65,10 +68,15 @@ public class JpaCategory {
     }
 
     public static JpaCategory toJpa(final Category category) {
-        return CategoryMapper.INSTANCE.mapToJpa(category);
+          return JpaCategory.builder()
+            .description(category.description())
+            .build();
     }
 
     public Category toDomain() {
-        return CategoryMapper.INSTANCE.mapToEntity(this);
+        return Category.builder()
+            .guid(guid)
+            .description(description)
+            .build();
     }
 }

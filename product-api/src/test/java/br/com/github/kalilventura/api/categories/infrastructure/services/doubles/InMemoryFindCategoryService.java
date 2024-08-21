@@ -18,6 +18,11 @@ public class InMemoryFindCategoryService implements FindCategoryService {
     }
 
     @Override
+    public Optional<Category> findById(final Long id) {
+        return items.stream().findFirst();
+    }
+
+    @Override
     public Optional<Category> findByDescription(final String description) {
         return items.stream().filter(category -> category.description().equals(description)).findFirst();
     }
