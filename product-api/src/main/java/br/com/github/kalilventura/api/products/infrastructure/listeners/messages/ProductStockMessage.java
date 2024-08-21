@@ -1,7 +1,6 @@
 package br.com.github.kalilventura.api.products.infrastructure.listeners.messages;
 
 import br.com.github.kalilventura.api.products.domain.entities.Product;
-import br.com.github.kalilventura.api.products.infrastructure.listeners.mappers.ProductStockMessageMapper;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -16,6 +15,6 @@ public record ProductStockMessage(
         @JsonProperty("products") List<ProductQuantity> products) {
 
         public Product toDomain() {
-                return ProductStockMessageMapper.INSTANCE.mapToEntity(this);
+            return null;
         }
 }

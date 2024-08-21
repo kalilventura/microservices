@@ -6,7 +6,7 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-08-20T20:25:53-0300",
+    date = "2024-08-21T18:08:43-0300",
     comments = "version: 1.6.0, compiler: javac, environment: Java 22.0.2 (Amazon.com Inc.)"
 )
 public class CategoryMapperImpl implements CategoryMapper {

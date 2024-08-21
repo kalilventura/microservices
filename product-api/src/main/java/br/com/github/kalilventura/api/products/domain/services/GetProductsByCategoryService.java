@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface GetProductsByCategoryService {
 
-    List<Product> getProductsByCategory(String guid);
+    List<Product> getProductsByCategory(String categoryId);
 }

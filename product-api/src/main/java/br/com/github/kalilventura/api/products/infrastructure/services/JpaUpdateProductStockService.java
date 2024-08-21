@@ -16,7 +16,7 @@ public class JpaUpdateProductStockService implements UpdateProductStockService {
     }
 
     @Override
-    @CacheEvict("products")
+    @CacheEvict(value = "products", allEntries = true)
     public void updateStock(final Product product) {
         final var jpa = repository.findByGuid(product.guid()).orElseThrow();
         jpa.setQuantity(product.quantity());

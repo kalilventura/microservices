@@ -2,7 +2,6 @@ package br.com.github.kalilventura.api.products.infrastructure.repositories.mode
 
 import br.com.github.kalilventura.api.categories.infrastructure.repositories.models.JpaCategory;
 import br.com.github.kalilventura.api.products.domain.entities.Product;
-import br.com.github.kalilventura.api.products.infrastructure.services.mappers.ProductMapper;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -41,6 +40,11 @@ public class JpaProduct {
 
     @Getter
     @Setter
+    @Column(nullable = false)
+    private Float price;
+
+    @Getter
+    @Setter
     @JoinColumn(name = "category_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private JpaCategory category;
@@ -60,6 +64,7 @@ public class JpaProduct {
             .guid(product.guid())
             .name(product.name())
             .quantity(product.quantity())
+            .price(product.price())
             .build();
     }
 

@@ -1,7 +1,6 @@
 package br.com.github.kalilventura.api.categories.infrastructure.repositories.models;
 
 import br.com.github.kalilventura.api.categories.domain.entities.Category;
-import br.com.github.kalilventura.api.categories.infrastructure.services.mappers.CategoryMapper;
 import br.com.github.kalilventura.api.products.infrastructure.repositories.models.JpaProduct;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

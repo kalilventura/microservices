@@ -4,9 +4,9 @@ import br.com.github.kalilventura.api.products.domain.entities.Product;
 import br.com.github.kalilventura.api.products.domain.services.GetProductsByCategoryService;
 import br.com.github.kalilventura.api.products.infrastructure.repositories.contracts.ProductsRepository;
 import br.com.github.kalilventura.api.products.infrastructure.repositories.models.JpaProduct;
-import br.com.github.kalilventura.api.products.infrastructure.services.mappers.ProductMapper;
 import lombok.AccessLevel;
 import lombok.Getter;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,9 +21,11 @@ public class JpaGetProductsByCategoryService implements GetProductsByCategorySer
         repository = productsRepository;
     }
 
+    // TODO: why doesn't the cacheable works?
     @Override
-    public List<Product> getProductsByCategory(final String guid) {
-        final var products = getRepository().findByCategoryGuid(guid);
+    // @Cacheable(value = "products", unless = "#result == null || #result.size() == 0")
+    public List<Product> getProductsByCategory(final String categoryId) {
+        final var products = getRepository().findByCategoryGuid(categoryId);
         return products.stream().map(JpaProduct::toDomain).toList();
     }
 }

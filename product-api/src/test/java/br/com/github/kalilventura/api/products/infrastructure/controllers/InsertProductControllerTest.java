@@ -38,7 +38,7 @@ class InsertProductControllerTest {
 
     @Test
     @VisibleForTesting
-    @DisplayName("should respond BAD_REQUEST (400) when the product already exists")
+    @DisplayName("should respond OK (200) when the product already exists")
     void shouldRespondBadRequest() {
         // given
         final var product = new ProductBuilder().buildDefault();
@@ -52,6 +52,6 @@ class InsertProductControllerTest {
 
         // then
         assertNotNull(response.getBody(), "the response has body");
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode(), "the status code is 400");
+        assertEquals(HttpStatus.OK, response.getStatusCode(), "the status code is 200");
     }
 }

@@ -5,6 +5,8 @@ import br.com.github.kalilventura.api.products.domain.entities.Product;
 import br.com.github.kalilventura.api.products.domain.services.InsertProductService;
 import br.com.github.kalilventura.api.products.infrastructure.repositories.contracts.ProductsRepository;
 import br.com.github.kalilventura.api.products.infrastructure.repositories.models.JpaProduct;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,6 +23,7 @@ public class JpaInsertProductService implements InsertProductService {
     }
 
     @Override
+    @CacheEvict(value = "products", allEntries = true)
     public Product save(final Product product) {
         final var category = categoriesRepository.findByGuid(product.categoryId()).orElseThrow();
 

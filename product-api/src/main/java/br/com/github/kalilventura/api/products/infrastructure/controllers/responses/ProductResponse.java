@@ -1,11 +1,21 @@
 package br.com.github.kalilventura.api.products.infrastructure.controllers.responses;
 
 import br.com.github.kalilventura.api.products.domain.entities.Product;
-import br.com.github.kalilventura.api.products.infrastructure.controllers.responses.mappers.ProductResponseMapper;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-public record ProductResponse(String guid, String name, Long quantity) {
+public record ProductResponse(
+    @JsonProperty String guid,
+    @JsonProperty String name,
+    @JsonProperty Long quantity,
+    @JsonProperty String categoryId,
+    @JsonProperty Float price) {
 
     public static ProductResponse toResponse(final Product product) {
-        return ProductResponseMapper.INSTANCE.mapToResponse(product);
+        return new ProductResponse(
+            product.guid(),
+            product.name(),
+            product.quantity(),
+            product.categoryId(),
+            product.price());
     }
 }

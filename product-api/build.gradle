@@ -36,7 +36,6 @@ repositories {
 ext {
     springCloudVersion = '2023.0.2'
     springBootVersion = '3.3.2'
-    mapstructVersion = '1.6.0'
     lombokVersion = '1.18.34'
     liquibaseVersion = '4.29.1'
     wiremockVersion = '3.9.1'
@@ -62,10 +61,6 @@ dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
     implementation 'org.springframework.boot:spring-boot-devtools'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-
-    // MapStruct
-    implementation "org.mapstruct:mapstruct:${mapstructVersion}"
-    annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
 
     // Liquibase
     implementation "org.liquibase:liquibase-core:${liquibaseVersion}"

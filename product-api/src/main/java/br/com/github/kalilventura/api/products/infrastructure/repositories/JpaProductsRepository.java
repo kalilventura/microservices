@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -18,4 +19,8 @@ public interface JpaProductsRepository extends ProductsRepository, CrudRepositor
     @Override
     @Query("SELECT P FROM JpaProduct AS P JOIN FETCH P.category WHERE P.name = :name")
     Optional<JpaProduct> findByName(String name);
+
+    @Override
+    @Query("SELECT P FROM JpaProduct AS P JOIN FETCH P.category WHERE P.category.guid = :guid")
+    List<JpaProduct> findByCategoryGuid(String guid);
 }

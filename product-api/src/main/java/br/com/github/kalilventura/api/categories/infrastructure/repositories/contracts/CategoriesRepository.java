@@ -7,7 +7,6 @@ import java.util.Optional;
 
 public interface CategoriesRepository {
 
-
     Optional<JpaCategory> findByGuid(String guid);
 
     Optional<JpaCategory> findById(Long id);

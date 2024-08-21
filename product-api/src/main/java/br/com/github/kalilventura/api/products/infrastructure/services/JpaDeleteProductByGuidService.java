@@ -17,7 +17,7 @@ public class JpaDeleteProductByGuidService implements DeleteProductByGuidService
     }
 
     @Override
-    @CacheEvict("products")
+    @CacheEvict(value = "products", key = "#guid")
     public void deleteByGuid(final String guid) {
         repository.deleteByGuid(guid);
     }

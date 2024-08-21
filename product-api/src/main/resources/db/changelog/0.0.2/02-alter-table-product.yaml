@@ -1,0 +1,21 @@
+databaseChangeLog:
+    - changeSet:
+          id: '02-alter-table-product'
+          author: 'kalilventura'
+          context: 'prod, test'
+          preConditions:
+              - tableExists:
+                    tableName: 'product'
+          changes:
+              - addColumn:
+                    tableName: 'product'
+                    columns:
+                        - column:
+                              constraints:
+                                  nullable: false
+                              name: 'price'
+                              type: 'FLOAT'
+          rollback:
+              - dropColumn:
+                    tableName: 'product'
+                    columnName: 'price'

@@ -4,9 +4,6 @@ import br.com.github.kalilventura.api.global.infrastructure.controllers.Response
 import br.com.github.kalilventura.api.products.domain.commands.GetProductsByCategoryCommand;
 import br.com.github.kalilventura.api.products.domain.entities.Product;
 import br.com.github.kalilventura.api.products.infrastructure.controllers.responses.ProductResponse;
-import br.com.github.kalilventura.api.products.infrastructure.controllers.responses.mappers.ProductResponseMapper;
-import lombok.AccessLevel;
-import lombok.Getter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

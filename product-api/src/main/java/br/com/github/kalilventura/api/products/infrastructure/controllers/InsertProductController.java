@@ -4,11 +4,7 @@ import br.com.github.kalilventura.api.global.infrastructure.controllers.Response
 import br.com.github.kalilventura.api.products.domain.commands.InsertProductCommand;
 import br.com.github.kalilventura.api.products.domain.entities.Product;
 import br.com.github.kalilventura.api.products.infrastructure.controllers.requests.ProductRequest;
-import br.com.github.kalilventura.api.products.infrastructure.controllers.requests.mappers.ProductRequestMapper;
 import br.com.github.kalilventura.api.products.infrastructure.controllers.responses.ProductResponse;
-import br.com.github.kalilventura.api.products.infrastructure.controllers.responses.mappers.ProductResponseMapper;
-import lombok.AccessLevel;
-import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -16,8 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @Validated
 @RestController
@@ -35,7 +29,7 @@ public final class InsertProductController {
         final var wrapper = new ResponseHolder<ProductResponse>();
         final var listeners = new InsertProductCommand.Listeners(
                 product -> onSuccess(product, wrapper),
-                product -> onError(product, wrapper));
+                product -> onExists(product, wrapper));
         command.execute(request.toDomain(), listeners);
         return wrapper.getResponse();
     }
@@ -44,9 +38,7 @@ public final class InsertProductController {
         response.setResponse(new ResponseEntity<>(ProductResponse.toResponse(product), HttpStatus.CREATED));
     }
 
-    private void onError(final Product product, final ResponseHolder<ProductResponse> response) {
-        response.setResponse(ResponseEntity
-                .badRequest()
-                .body(ProductResponse.toResponse(product)));
+    private void onExists(final Product product, final ResponseHolder<ProductResponse> response) {
+        response.setResponse(ResponseEntity.ok().body(ProductResponse.toResponse(product)));
     }
 }
