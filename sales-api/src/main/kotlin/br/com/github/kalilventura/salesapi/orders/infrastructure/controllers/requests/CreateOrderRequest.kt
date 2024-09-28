@@ -2,7 +2,7 @@ package br.com.github.kalilventura.salesapi.orders.infrastructure.controllers.re
 
 import br.com.github.kalilventura.salesapi.orders.domain.entities.Order
 import br.com.github.kalilventura.salesapi.orders.domain.entities.Status
-import br.com.github.kalilventura.salesapi.products.domain.entities.Product
+import br.com.github.kalilventura.salesapi.orders.domain.entities.Product
 import java.time.LocalDateTime
 import java.util.*
 

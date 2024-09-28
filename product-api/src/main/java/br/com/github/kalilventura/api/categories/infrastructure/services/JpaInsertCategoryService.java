@@ -9,16 +9,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class JpaInsertCategoryService implements InsertCategoryService {
 
-    private final CategoriesRepository repository;
+  private final CategoriesRepository repository;
 
-    public JpaInsertCategoryService(final CategoriesRepository categoriesRepository) {
-        repository = categoriesRepository;
-    }
+  public JpaInsertCategoryService(final CategoriesRepository categoriesRepository) {
+    repository = categoriesRepository;
+  }
 
-    @Override
-    public Category save(final Category category) {
-        final var jpa = JpaCategory.toJpa(category);
-        final var newCategory = repository.save(jpa);
-        return newCategory.toDomain();
-    }
+  @Override
+  public Category save(final Category category) {
+    final var jpa = JpaCategory.toJpa(category);
+    final var newCategory = repository.save(jpa);
+    return newCategory.toDomain();
+  }
 }

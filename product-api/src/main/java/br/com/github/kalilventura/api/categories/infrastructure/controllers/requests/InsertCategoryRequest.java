@@ -6,7 +6,7 @@ import lombok.Builder;
 @Builder
 public record InsertCategoryRequest(String description) {
 
-    public Category toDomain() {
-        return new Category(null, description);
-    }
+  public Category toDomain() {
+    return new Category(null, description);
+  }
 }

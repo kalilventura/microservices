@@ -9,18 +9,18 @@ import org.springframework.stereotype.Service;
 @Service
 public class JpaUpdateProductStockService implements UpdateProductStockService {
 
-    private final ProductsRepository repository;
+  private final ProductsRepository repository;
 
-    public JpaUpdateProductStockService(final ProductsRepository productsRepository) {
-        repository = productsRepository;
-    }
+  public JpaUpdateProductStockService(final ProductsRepository productsRepository) {
+    repository = productsRepository;
+  }
 
-    @Override
-    @CacheEvict(value = "products", allEntries = true)
-    public void updateStock(final Product product) {
-        final var jpa = repository.findByGuid(product.guid()).orElseThrow();
-        jpa.setQuantity(product.quantity());
+  @Override
+  @CacheEvict(value = "products", allEntries = true)
+  public void updateStock(final Product product) {
+    final var jpa = repository.findByGuid(product.guid()).orElseThrow();
+    jpa.setQuantity(product.quantity());
 
-        repository.save(jpa);
-    }
+    repository.save(jpa);
+  }
 }

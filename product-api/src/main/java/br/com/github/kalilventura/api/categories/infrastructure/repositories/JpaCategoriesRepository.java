@@ -6,4 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface JpaCategoriesRepository extends CategoriesRepository, CrudRepository<JpaCategory, Long> {}
+public interface JpaCategoriesRepository
+    extends CategoriesRepository, CrudRepository<JpaCategory, Long> {}

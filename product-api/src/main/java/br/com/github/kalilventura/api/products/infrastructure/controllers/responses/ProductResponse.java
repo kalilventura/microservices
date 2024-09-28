@@ -10,12 +10,8 @@ public record ProductResponse(
     @JsonProperty String categoryId,
     @JsonProperty Float price) {
 
-    public static ProductResponse toResponse(final Product product) {
-        return new ProductResponse(
-            product.guid(),
-            product.name(),
-            product.quantity(),
-            product.categoryId(),
-            product.price());
-    }
+  public static ProductResponse toResponse(final Product product) {
+    return new ProductResponse(
+        product.guid(), product.name(), product.quantity(), product.categoryId(), product.price());
+  }
 }

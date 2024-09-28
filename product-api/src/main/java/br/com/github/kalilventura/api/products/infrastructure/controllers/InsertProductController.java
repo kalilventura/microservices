@@ -18,27 +18,28 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("${api.v1.endpoint-prefix}")
 public final class InsertProductController {
 
-    private final InsertProductCommand command;
+  private final InsertProductCommand command;
 
-    public InsertProductController(final InsertProductCommand insertCommand) {
-        command = insertCommand;
-    }
+  public InsertProductController(final InsertProductCommand insertCommand) {
+    command = insertCommand;
+  }
 
-    @PostMapping("/products")
-    public ResponseEntity<ProductResponse> post(@RequestBody final ProductRequest request) {
-        final var wrapper = new ResponseHolder<ProductResponse>();
-        final var listeners = new InsertProductCommand.Listeners(
-                product -> onSuccess(product, wrapper),
-                product -> onExists(product, wrapper));
-        command.execute(request.toDomain(), listeners);
-        return wrapper.getResponse();
-    }
+  @PostMapping("/products")
+  public ResponseEntity<ProductResponse> post(@RequestBody final ProductRequest request) {
+    final var wrapper = new ResponseHolder<ProductResponse>();
+    final var listeners =
+        new InsertProductCommand.Listeners(
+            product -> onSuccess(product, wrapper), product -> onExists(product, wrapper));
+    command.execute(request.toDomain(), listeners);
+    return wrapper.getResponse();
+  }
 
-    private void onSuccess(final Product product, final ResponseHolder<ProductResponse> response) {
-        response.setResponse(new ResponseEntity<>(ProductResponse.toResponse(product), HttpStatus.CREATED));
-    }
+  private void onSuccess(final Product product, final ResponseHolder<ProductResponse> response) {
+    response.setResponse(
+        new ResponseEntity<>(ProductResponse.toResponse(product), HttpStatus.CREATED));
+  }
 
-    private void onExists(final Product product, final ResponseHolder<ProductResponse> response) {
-        response.setResponse(ResponseEntity.ok().body(ProductResponse.toResponse(product)));
-    }
+  private void onExists(final Product product, final ResponseHolder<ProductResponse> response) {
+    response.setResponse(ResponseEntity.ok().body(ProductResponse.toResponse(product)));
+  }
 }

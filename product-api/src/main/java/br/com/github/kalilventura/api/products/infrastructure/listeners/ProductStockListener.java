@@ -11,23 +11,23 @@ import org.springframework.stereotype.Component;
 @Component
 public class ProductStockListener {
 
-    private final UpdateProductStockCommand command;
+  private final UpdateProductStockCommand command;
 
-    public ProductStockListener(final UpdateProductStockCommand updateCommand) {
-        command = updateCommand;
-    }
+  public ProductStockListener(final UpdateProductStockCommand updateCommand) {
+    command = updateCommand;
+  }
 
-    @RabbitListener(queues = "${app-config.rabbit.queue.product-stock}")
-    public void process(final ProductStockMessage message) {
-        final var listeners = new Listeners(this::onSuccess, this::onError);
-        command.execute(message.toDomain(), listeners);
-    }
+  @RabbitListener(queues = "${app-config.rabbit.queue.product-stock}")
+  public void process(final ProductStockMessage message) {
+    final var listeners = new Listeners(this::onSuccess, this::onError);
+    command.execute(message.toDomain(), listeners);
+  }
 
-    private void onSuccess() {
-        log.info("Queue processed: {}", getClass());
-    }
+  private void onSuccess() {
+    log.info("Queue processed: {}", getClass());
+  }
 
-    private void onError() {
-        log.error("Queue processing with error: {}", getClass());
-    }
+  private void onError() {
+    log.error("Queue processing with error: {}", getClass());
+  }
 }

@@ -1,6 +1,5 @@
 package br.com.github.kalilventura.salesapi.orders.domain.entities
 
-import br.com.github.kalilventura.salesapi.products.domain.entities.Product
 import java.time.LocalDateTime
 
 class Order private constructor(

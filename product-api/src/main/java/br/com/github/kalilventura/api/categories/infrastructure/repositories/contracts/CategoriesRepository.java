@@ -1,19 +1,18 @@
 package br.com.github.kalilventura.api.categories.infrastructure.repositories.contracts;
 
 import br.com.github.kalilventura.api.categories.infrastructure.repositories.models.JpaCategory;
-
 import java.util.List;
 import java.util.Optional;
 
 public interface CategoriesRepository {
 
-    Optional<JpaCategory> findByGuid(String guid);
+  Optional<JpaCategory> findByGuid(String guid);
 
-    Optional<JpaCategory> findById(Long id);
+  Optional<JpaCategory> findById(Long id);
 
-    Optional<JpaCategory> findByDescription(String description);
+  Optional<JpaCategory> findByDescription(String description);
 
-    List<JpaCategory> findAll();
+  List<JpaCategory> findAll();
 
-    JpaCategory save(JpaCategory jpa);
+  JpaCategory save(JpaCategory jpa);
 }

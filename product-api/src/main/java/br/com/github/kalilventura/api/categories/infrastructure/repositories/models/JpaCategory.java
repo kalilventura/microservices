@@ -12,15 +12,14 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.UUID;
 
 @Entity
 @Builder
@@ -29,53 +28,46 @@ import java.util.UUID;
 @Table(name = "category")
 public class JpaCategory {
 
-    @Id
-    @Getter
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @Getter
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @Getter
-    @Column(nullable = false)
-    private String guid;
+  @Getter
+  @Column(nullable = false)
+  private String guid;
 
-    @Getter
-    @Setter
-    @Column(nullable = false)
-    private String description;
+  @Getter
+  @Setter
+  @Column(nullable = false)
+  private String description;
 
-    @Getter
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "category")
-    private List<JpaProduct> products;
+  @Getter
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "category")
+  private List<JpaProduct> products;
 
-    @Getter
-    @Column(nullable = false)
-    private LocalDateTime createdAt;
+  @Getter
+  @Column(nullable = false)
+  private LocalDateTime createdAt;
 
-    @Getter
-    @Column
-    private LocalDateTime updatedAt;
+  @Getter @Column private LocalDateTime updatedAt;
 
-    @PrePersist
-    public void prePersist() {
-        guid = UUID.randomUUID().toString();
-        createdAt = LocalDateTime.now();
-    }
+  @PrePersist
+  public void prePersist() {
+    guid = UUID.randomUUID().toString();
+    createdAt = LocalDateTime.now();
+  }
 
-    @PreUpdate
-    public void preUpdate() {
-        updatedAt = LocalDateTime.now();
-    }
+  @PreUpdate
+  public void preUpdate() {
+    updatedAt = LocalDateTime.now();
+  }
 
-    public static JpaCategory toJpa(final Category category) {
-          return JpaCategory.builder()
-            .description(category.description())
-            .build();
-    }
+  public static JpaCategory toJpa(final Category category) {
+    return JpaCategory.builder().description(category.description()).build();
+  }
 
-    public Category toDomain() {
-        return Category.builder()
-            .guid(guid)
-            .description(description)
-            .build();
-    }
+  public Category toDomain() {
+    return Category.builder().guid(guid).description(description).build();
+  }
 }

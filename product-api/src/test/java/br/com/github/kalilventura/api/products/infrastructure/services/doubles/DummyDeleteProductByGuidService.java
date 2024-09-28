@@ -6,8 +6,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class DummyDeleteProductByGuidService implements DeleteProductByGuidService {
 
-    @Override
-    public void deleteByGuid(final String guid) {
-
-    }
+  @Override
+  public void deleteByGuid(final String guid) {}
 }

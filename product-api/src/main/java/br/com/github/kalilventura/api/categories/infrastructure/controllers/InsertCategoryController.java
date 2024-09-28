@@ -19,27 +19,27 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("${api.v1.endpoint-prefix}")
 public final class InsertCategoryController {
 
-    private final InsertCategoryCommand command;
+  private final InsertCategoryCommand command;
 
-    public InsertCategoryController(final InsertCategoryCommand insertCategoryCommand) {
-        command = insertCategoryCommand;
-    }
+  public InsertCategoryController(final InsertCategoryCommand insertCategoryCommand) {
+    command = insertCategoryCommand;
+  }
 
-    @PostMapping("/categories")
-    public ResponseEntity<CategoryResponse> post(@RequestBody final InsertCategoryRequest request) {
-        final var wrapper = new ResponseHolder<CategoryResponse>();
-        final var listeners = new Listeners(
-                category -> onCreated(category, wrapper),
-                () -> onExists(wrapper));
-        command.execute(request.toDomain(), listeners);
-        return wrapper.getResponse();
-    }
+  @PostMapping("/categories")
+  public ResponseEntity<CategoryResponse> post(@RequestBody final InsertCategoryRequest request) {
+    final var wrapper = new ResponseHolder<CategoryResponse>();
+    final var listeners =
+        new Listeners(category -> onCreated(category, wrapper), () -> onExists(wrapper));
+    command.execute(request.toDomain(), listeners);
+    return wrapper.getResponse();
+  }
 
-    private void onCreated(final Category category, final ResponseHolder<CategoryResponse> response) {
-        response.setResponse(new ResponseEntity<>(CategoryResponse.toResponse(category), HttpStatus.CREATED));
-    }
+  private void onCreated(final Category category, final ResponseHolder<CategoryResponse> response) {
+    response.setResponse(
+        new ResponseEntity<>(CategoryResponse.toResponse(category), HttpStatus.CREATED));
+  }
 
-    private void onExists(final ResponseHolder<CategoryResponse> response) {
-        response.setResponse(ResponseEntity.badRequest().build());
-    }
+  private void onExists(final ResponseHolder<CategoryResponse> response) {
+    response.setResponse(ResponseEntity.badRequest().build());
+  }
 }

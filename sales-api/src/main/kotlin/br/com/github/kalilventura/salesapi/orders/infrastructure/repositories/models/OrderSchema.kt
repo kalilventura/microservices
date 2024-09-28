@@ -2,7 +2,6 @@ package br.com.github.kalilventura.salesapi.orders.infrastructure.repositories.m
 
 import br.com.github.kalilventura.salesapi.orders.domain.entities.Order
 import br.com.github.kalilventura.salesapi.orders.domain.entities.Status
-import br.com.github.kalilventura.salesapi.products.infrastructure.repositories.models.ProductSchema
 import org.bson.types.ObjectId
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document

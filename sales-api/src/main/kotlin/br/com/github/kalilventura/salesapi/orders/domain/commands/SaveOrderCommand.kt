@@ -4,7 +4,6 @@ import br.com.github.kalilventura.salesapi.global.infrastructure.Result
 import br.com.github.kalilventura.salesapi.orders.domain.entities.Order
 import br.com.github.kalilventura.salesapi.orders.domain.services.SaveOrderService
 import org.springframework.stereotype.Component
-import java.util.function.Consumer
 
 @Component
 class SaveOrderCommand(val service: SaveOrderService) {
@@ -16,6 +15,4 @@ class SaveOrderCommand(val service: SaveOrderService) {
             Result.Error(e)
         }
     }
-
-    data class Listeners(val onSuccess: Consumer<Order>, val onError: Runnable)
 }

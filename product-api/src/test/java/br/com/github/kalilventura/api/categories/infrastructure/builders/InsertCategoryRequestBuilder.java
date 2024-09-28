@@ -6,12 +6,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class InsertCategoryRequestBuilder {
 
-    private String description = "";
+  private String description = "";
 
-    public InsertCategoryRequest buildDefault() {
-        return InsertCategoryRequest
-                .builder()
-                .description(description)
-                .build();
-    }
+  public InsertCategoryRequest buildDefault() {
+    return InsertCategoryRequest.builder().description(description).build();
+  }
 }

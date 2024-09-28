@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class InMemoryInsertProductService implements InsertProductService {
 
-    @Override
-    public Product save(final Product product) {
-        return product;
-    }
+  @Override
+  public Product save(final Product product) {
+    return product;
+  }
 }

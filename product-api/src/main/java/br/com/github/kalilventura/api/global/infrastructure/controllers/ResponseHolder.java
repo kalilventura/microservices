@@ -6,6 +6,5 @@ import org.springframework.http.ResponseEntity;
 
 public final class ResponseHolder<T> {
 
-    @Getter @Setter
-    private ResponseEntity<T> response;
+  @Getter @Setter private ResponseEntity<T> response;
 }

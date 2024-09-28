@@ -12,28 +12,26 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("${api.v1.endpoint-prefix}")
 public final class DeleteProductByGuidController {
 
-    private final DeleteProductByGuidCommand command;
+  private final DeleteProductByGuidCommand command;
 
-    public DeleteProductByGuidController(final DeleteProductByGuidCommand deleteCommand) {
-        command = deleteCommand;
-    }
+  public DeleteProductByGuidController(final DeleteProductByGuidCommand deleteCommand) {
+    command = deleteCommand;
+  }
 
-    @DeleteMapping("/products/{guid}")
-    public ResponseEntity<Void> get(@PathVariable("guid") final String guid) {
-        final var wrapper = new ResponseHolder<Void>();
-        final var listeners = new DeleteProductByGuidCommand.Listeners(
-                () -> onSuccess(wrapper),
-                () -> onEmpty(wrapper));
-        command.execute(guid, listeners);
-        return wrapper.getResponse();
-    }
+  @DeleteMapping("/products/{guid}")
+  public ResponseEntity<Void> get(@PathVariable("guid") final String guid) {
+    final var wrapper = new ResponseHolder<Void>();
+    final var listeners =
+        new DeleteProductByGuidCommand.Listeners(() -> onSuccess(wrapper), () -> onEmpty(wrapper));
+    command.execute(guid, listeners);
+    return wrapper.getResponse();
+  }
 
-    private void onSuccess(final ResponseHolder<Void> response) {
-        response.setResponse(ResponseEntity.ok().build());
-    }
+  private void onSuccess(final ResponseHolder<Void> response) {
+    response.setResponse(ResponseEntity.ok().build());
+  }
 
-    private void onEmpty(final ResponseHolder<Void> response) {
-        response.setResponse(ResponseEntity.noContent().build());
-    }
-
+  private void onEmpty(final ResponseHolder<Void> response) {
+    response.setResponse(ResponseEntity.noContent().build());
+  }
 }

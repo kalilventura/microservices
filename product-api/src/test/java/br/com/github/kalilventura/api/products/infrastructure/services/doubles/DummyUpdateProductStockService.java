@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class DummyUpdateProductStockService implements UpdateProductStockService {
 
-    @Override
-    public void updateStock(final Product product) {
-        /* do nothing because it's a dummy */
-    }
+  @Override
+  public void updateStock(final Product product) {
+    /* do nothing because it's a dummy */
+  }
 }

@@ -7,5 +7,4 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record ProductQuantity(
-        @JsonProperty("guid") String id,
-        @JsonProperty("quantity") Integer quantity) {}
+    @JsonProperty("guid") String id, @JsonProperty("quantity") Integer quantity) {}

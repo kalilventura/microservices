@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class InMemoryInsertCategoryService implements InsertCategoryService {
 
-    @Override
-    public Category save(final Category category) {
-        return category;
-    }
+  @Override
+  public Category save(final Category category) {
+    return category;
+  }
 }

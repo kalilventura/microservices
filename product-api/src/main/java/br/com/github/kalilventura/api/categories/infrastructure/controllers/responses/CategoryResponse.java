@@ -6,7 +6,7 @@ import lombok.Builder;
 @Builder
 public record CategoryResponse(String guid, String description) {
 
-    public static CategoryResponse toResponse(final Category category) {
-        return new CategoryResponse(category.guid(), category.description());
-    }
+  public static CategoryResponse toResponse(final Category category) {
+    return new CategoryResponse(category.guid(), category.description());
+  }
 }

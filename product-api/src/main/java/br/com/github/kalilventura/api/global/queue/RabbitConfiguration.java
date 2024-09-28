@@ -15,54 +15,48 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitConfiguration {
 
-    @Value("${app-config.rabbit.exchange.product}")
-    private String productTopicExchange;
+  @Value("${app-config.rabbit.exchange.product}")
+  private String productTopicExchange;
 
-    @Value("${app-config.rabbit.routingKey.product-stock}")
-    private String productStockKey;
+  @Value("${app-config.rabbit.routingKey.product-stock}")
+  private String productStockKey;
 
-    @Value("${app-config.rabbit.routingKey.sales-confirmation}")
-    private String salesConfirmationKey;
+  @Value("${app-config.rabbit.routingKey.sales-confirmation}")
+  private String salesConfirmationKey;
 
-    @Value("${app-config.rabbit.queue.product-stock}")
-    private String productStockMq;
+  @Value("${app-config.rabbit.queue.product-stock}")
+  private String productStockMq;
 
-    @Value("${app-config.rabbit.queue.sales-confirmation}")
-    private String salesConfirmationMq;
+  @Value("${app-config.rabbit.queue.sales-confirmation}")
+  private String salesConfirmationMq;
 
-    @Bean
-    public TopicExchange productTopicExchange() {
-        return new TopicExchange(productTopicExchange);
-    }
+  @Bean
+  public TopicExchange productTopicExchange() {
+    return new TopicExchange(productTopicExchange);
+  }
 
-    @Bean
-    public Queue productStockMq() {
-        return new Queue(productStockMq, true);
-    }
+  @Bean
+  public Queue productStockMq() {
+    return new Queue(productStockMq, true);
+  }
 
-    @Bean
-    public Queue salesConfirmationMq() {
-        return new Queue(salesConfirmationMq, true);
-    }
+  @Bean
+  public Queue salesConfirmationMq() {
+    return new Queue(salesConfirmationMq, true);
+  }
 
-    @Bean
-    public Binding productStockMqBinding(final TopicExchange topicExchange) {
-        return BindingBuilder
-                .bind(productStockMq())
-                .to(topicExchange)
-                .with(productStockKey);
-    }
+  @Bean
+  public Binding productStockMqBinding(final TopicExchange topicExchange) {
+    return BindingBuilder.bind(productStockMq()).to(topicExchange).with(productStockKey);
+  }
 
-    @Bean
-    public Binding salesConfirmationMqBinding(final TopicExchange topicExchange) {
-        return BindingBuilder
-                .bind(salesConfirmationMq())
-                .to(topicExchange)
-                .with(salesConfirmationKey);
-    }
+  @Bean
+  public Binding salesConfirmationMqBinding(final TopicExchange topicExchange) {
+    return BindingBuilder.bind(salesConfirmationMq()).to(topicExchange).with(salesConfirmationKey);
+  }
 
-    @Bean
-    public MessageConverter jsonMessageConverter() {
-        return new Jackson2JsonMessageConverter();
-    }
+  @Bean
+  public MessageConverter jsonMessageConverter() {
+    return new Jackson2JsonMessageConverter();
+  }
 }

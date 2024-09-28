@@ -1,6 +1,6 @@
-package br.com.github.kalilventura.salesapi.products.infrastructure.repositories.models
+package br.com.github.kalilventura.salesapi.orders.infrastructure.repositories.models
 
-import br.com.github.kalilventura.salesapi.products.domain.entities.Product
+import br.com.github.kalilventura.salesapi.orders.domain.entities.Product
 import org.bson.types.ObjectId
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document

@@ -4,5 +4,5 @@ import br.com.github.kalilventura.api.categories.domain.entities.Category;
 
 public interface InsertCategoryService {
 
-    Category save(Category category);
+  Category save(Category category);
 }
